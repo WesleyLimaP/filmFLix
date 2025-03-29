@@ -14,29 +14,31 @@ public class Movie {
     private Long id;
     @NotBlank
     private String title;
-    @NotBlank
     private String subTitle;
     @NotBlank
-    private Integer date;
+    private Integer movieYear;
     @NotBlank
     private String imgUrl;
     @NotBlank
-    private String synopsys;
+    @Column(columnDefinition = "Text")
+    private String synopsis;
     @OneToMany(mappedBy = "movie")
     private Set<Review> reviews;
     @ManyToOne
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    public Movie(Long id, String title, String subTitle, Integer date, String imgUrl, String synopsys, Set<Review> reviews, Genre genre) {
+    public Movie(Long id, String title, String subTitle, Integer movie_year, String imgUrl, String synopsis, Genre genre) {
         this.id = id;
         this.title = title;
         this.subTitle = subTitle;
-        this.date = date;
+        this.movieYear = movie_year;
         this.imgUrl = imgUrl;
-        this.synopsys = synopsys;
-        this.reviews = reviews;
+        this.synopsis = synopsis;
         this.genre = genre;
+    }
+
+    public Movie() {
     }
 
     public Long getId() {
@@ -63,12 +65,12 @@ public class Movie {
         this.subTitle = subTitle;
     }
 
-    public Integer getDate() {
-        return date;
+    public Integer getMovieYear() {
+        return movieYear;
     }
 
-    public void setDate(Integer date) {
-        this.date = date;
+    public void setMovieYear(Integer movieYear) {
+        this.movieYear = movieYear;
     }
 
     public String getImgUrl() {
@@ -79,12 +81,12 @@ public class Movie {
         this.imgUrl = imgUrl;
     }
 
-    public String getSynopsys() {
-        return synopsys;
+    public String getSynopsis() {
+        return synopsis;
     }
 
-    public void setSynopsys(String synopsys) {
-        this.synopsys = synopsys;
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
     }
 
     public Set<Review> getReviews() {

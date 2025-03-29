@@ -2,8 +2,6 @@ package com.filmFlix.project_filmFlix.entities;
 
 import jakarta.persistence.*;
 
-import javax.crypto.SecretKey;
-import java.io.File;
 import java.util.Set;
 
 @Entity
