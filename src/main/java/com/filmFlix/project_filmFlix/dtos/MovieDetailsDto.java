@@ -1,28 +1,54 @@
 package com.filmFlix.project_filmFlix.dtos;
 
-import com.filmFlix.project_filmFlix.projections.MovieInfoProjection;
+import com.filmFlix.project_filmFlix.entities.Movie;
+import com.filmFlix.project_filmFlix.entities.Review;
+import com.filmFlix.project_filmFlix.projections.MovieDetailsProjection;
 
 import java.util.HashSet;
 import java.util.Set;
+//to do: add id aqui e nas projections
 
-public class MovieInfoDto {
+public class MovieDetailsDto {
     private String title;
     private String subTitle;
-    private Integer year;
+    private Long year;
     private String imgUrl;
     private String synopsis;
+    private String genre;
     private Set<ReviewDto> reviews = new HashSet<>();
 
-    public MovieInfoDto(MovieInfoProjection projection) {
+    public MovieDetailsDto(MovieDetailsProjection projection) {
         this.title = projection.getTitle();
         this.subTitle = projection.getSub_title();
         this.year = projection.getMovie_year();
         this.imgUrl = projection.getImg_url();
         this.synopsis = projection.getSynopsis();
+        this.genre = projection.getName();
+
+    }
+    public MovieDetailsDto(Movie movie) {
+        this.title = movie.getTitle();
+        this.subTitle = movie.getSubTitle();
+        this.year = movie.getMovieYear();
+        this.imgUrl = movie.getImgUrl();
+        this.synopsis = movie.getSynopsis();
+        this.genre = String.valueOf(movie.getGenre().getId());
+
+        for(Review review: movie.getReviews()){
+            this.getReviews().add(new ReviewDto(review));
+        }
 
     }
 
-    public MovieInfoDto() {
+    public MovieDetailsDto() {
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getTitle() {
@@ -41,11 +67,11 @@ public class MovieInfoDto {
         this.subTitle = subTitle;
     }
 
-    public Integer getYear() {
+    public Long getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(Long year) {
         this.year = year;
     }
 

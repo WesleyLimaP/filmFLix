@@ -1,15 +1,20 @@
 package com.filmFlix.project_filmFlix.dtos;
 
-import com.filmFlix.project_filmFlix.projections.MovieInfoProjection;
+import com.filmFlix.project_filmFlix.entities.Review;
+import com.filmFlix.project_filmFlix.projections.MovieDetailsProjection;
 
 public class ReviewDto {
 
     private String text;
     private String userName;
 
-    public ReviewDto(MovieInfoProjection projection) {
+    public ReviewDto(MovieDetailsProjection projection) {
         this.text = projection.getText();
         this.userName = projection.getName();
+    }
+    public ReviewDto(Review review) {
+        this.text = review.getText();
+        this.userName = review.getUser().getName();
     }
 
     public ReviewDto() {

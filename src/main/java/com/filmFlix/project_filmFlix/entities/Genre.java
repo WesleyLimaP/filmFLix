@@ -19,6 +19,13 @@ public class Genre {
         this.id = id;
         this.name = name;
     }
+    public Genre(String name) {
+        this.name = name;
+    }
+
+    public Genre(Long id) {
+        this.id = id;
+    }
 
     public Genre() {
     }

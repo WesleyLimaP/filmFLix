@@ -6,10 +6,10 @@ import com.filmFlix.project_filmFlix.projections.MovieProjection;
 public class MovieDto {
     private String title;
     private String sub_title;
-    private Integer movie_year;
+    private Long movie_year;
     private String img_url;
 
-    public MovieDto(String title, String sub_title, Integer movie_year, String img_url) {
+    public MovieDto(String title, String sub_title, Long movie_year, String img_url) {
         this.title = title;
         this.sub_title = sub_title;
         this.movie_year = movie_year;
@@ -29,8 +29,8 @@ public class MovieDto {
     public MovieDto(Movie movie) {
         this.title = movie.getTitle();
         this.sub_title = movie.getSubTitle();
-        this.movie_year = getMovie_year();
-        this.img_url = getImg_url();
+        this.movie_year = movie.getMovieYear();
+        this.img_url = movie.getImgUrl();
     }
 
     public String getTitle() {
@@ -49,11 +49,11 @@ public class MovieDto {
         this.sub_title = sub_title;
     }
 
-    public Integer getMovie_year() {
+    public Long getMovie_year() {
         return movie_year;
     }
 
-    public void setMovie_year(Integer movie_year) {
+    public void setMovie_year(Long movie_year) {
         this.movie_year = movie_year;
     }
 

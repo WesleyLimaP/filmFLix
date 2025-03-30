@@ -1,9 +1,9 @@
 package com.filmFlix.project_filmFlix.projections;
 
-public interface MovieInfoProjection {
+public interface MovieDetailsProjection {
     String getTitle();
     String getSub_title();
-    Integer getMovie_year();
+    Long getMovie_year();
     String getImg_url();
     String getSynopsis();
     String getText();

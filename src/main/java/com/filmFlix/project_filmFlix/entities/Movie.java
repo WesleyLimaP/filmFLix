@@ -15,8 +15,7 @@ public class Movie {
     @NotBlank
     private String title;
     private String subTitle;
-    @NotBlank
-    private Integer movieYear;
+    private Long movieYear;
     @NotBlank
     private String imgUrl;
     @NotBlank
@@ -28,8 +27,16 @@ public class Movie {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    public Movie(Long id, String title, String subTitle, Integer movie_year, String imgUrl, String synopsis, Genre genre) {
+    public Movie(Long id, String title, String subTitle, Long movie_year, String imgUrl, String synopsis, Genre genre) {
         this.id = id;
+        this.title = title;
+        this.subTitle = subTitle;
+        this.movieYear = movie_year;
+        this.imgUrl = imgUrl;
+        this.synopsis = synopsis;
+        this.genre = genre;
+    }
+    public Movie(String title, String subTitle, Long movie_year, String imgUrl, String synopsis, Genre genre) {
         this.title = title;
         this.subTitle = subTitle;
         this.movieYear = movie_year;
@@ -65,11 +72,11 @@ public class Movie {
         this.subTitle = subTitle;
     }
 
-    public Integer getMovieYear() {
+    public Long getMovieYear() {
         return movieYear;
     }
 
-    public void setMovieYear(Integer movieYear) {
+    public void setMovieYear(Long movieYear) {
         this.movieYear = movieYear;
     }
 
