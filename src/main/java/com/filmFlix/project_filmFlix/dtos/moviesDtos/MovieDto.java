@@ -1,4 +1,4 @@
-package com.filmFlix.project_filmFlix.dtos;
+package com.filmFlix.project_filmFlix.dtos.moviesDtos;
 
 import com.filmFlix.project_filmFlix.entities.Movie;
 import com.filmFlix.project_filmFlix.projections.MovieProjection;

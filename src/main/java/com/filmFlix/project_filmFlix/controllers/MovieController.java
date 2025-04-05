@@ -1,8 +1,8 @@
 package com.filmFlix.project_filmFlix.controllers;
 
-import com.filmFlix.project_filmFlix.dtos.MovieDto;
-import com.filmFlix.project_filmFlix.dtos.MovieDetailsDto;
-import com.filmFlix.project_filmFlix.dtos.MovieInsertDto;
+import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDto;
+import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDetailsDto;
+import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieInsertDto;
 import com.filmFlix.project_filmFlix.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

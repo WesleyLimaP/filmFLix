@@ -1,9 +1,9 @@
 package com.filmFlix.project_filmFlix.services;
 
-import com.filmFlix.project_filmFlix.dtos.MovieDto;
-import com.filmFlix.project_filmFlix.dtos.MovieDetailsDto;
-import com.filmFlix.project_filmFlix.dtos.MovieInsertDto;
-import com.filmFlix.project_filmFlix.dtos.ReviewDto;
+import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDto;
+import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDetailsDto;
+import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieInsertDto;
+import com.filmFlix.project_filmFlix.dtos.reviewsDtos.ReviewDto;
 import com.filmFlix.project_filmFlix.entities.Genre;
 import com.filmFlix.project_filmFlix.entities.Movie;
 import com.filmFlix.project_filmFlix.projections.MovieDetailsProjection;

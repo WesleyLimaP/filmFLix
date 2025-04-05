@@ -1,5 +1,6 @@
-package com.filmFlix.project_filmFlix.dtos;
+package com.filmFlix.project_filmFlix.dtos.moviesDtos;
 
+import com.filmFlix.project_filmFlix.dtos.reviewsDtos.ReviewDto;
 import com.filmFlix.project_filmFlix.entities.Movie;
 import com.filmFlix.project_filmFlix.entities.Review;
 import com.filmFlix.project_filmFlix.projections.MovieDetailsProjection;

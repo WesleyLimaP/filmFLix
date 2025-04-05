@@ -2,9 +2,9 @@ INSERT INTO tb_role(authority) VALUES('ROLE_VISITOR')
 INSERT INTO tb_role(authority) VALUES('ROLE_MEMBER')
 INSERT INTO tb_role(authority) VALUES('ROLE_ADM')
 
-INSERT INTO tb_user (name, password, email, role_id) VALUES ('Bob', '987654321','bob@gmail.com', 1);
-INSERT INTO tb_user (name, password, email, role_id) VALUES ('Ana', '123456789','ana@gmail.com', 2);
-INSERT INTO tb_user (name, password, email, role_id) VALUES ('wesley', '111111111','wesley@gmail.com', 3);
+INSERT INTO tb_user (name, password, email, role_id) VALUES ('Bob', '$2a$10$cpTBuvzYW2ANFy0zPCcQxu/qosnI/AVmPX.6tQqaA6roYtLhwo78S','bob@gmail.com', 1);
+INSERT INTO tb_user (name, password, email, role_id) VALUES ('Ana', '$2a$10$cpTBuvzYW2ANFy0zPCcQxu/qosnI/AVmPX.6tQqaA6roYtLhwo78S','ana@gmail.com', 2);
+INSERT INTO tb_user (name, password, email, role_id) VALUES ('wesley', '$2a$10$cpTBuvzYW2ANFy0zPCcQxu/qosnI/AVmPX.6tQqaA6roYtLhwo78S','wesley@gmail.com', 3);
 
 INSERT INTO tb_genre (name) VALUES ('Comédia');
 INSERT INTO tb_genre (name) VALUES ('Terror');
@@ -23,5 +23,5 @@ INSERT INTO tb_movie (title, sub_title, movie_year, img_url, synopsis, genre_id)
 INSERT INTO tb_movie (title, sub_title, movie_year, img_url, synopsis, genre_id) VALUES ('O Segredo da Cabana', null, 2012, 'https://image.tmdb.org/t/p/w533_and_h300_bestv2/5iiVfPS6LsAqmVQVOzhyCHhCFgU.jpg', 'Cinco amigos fazem uma pausa em uma cabana remota, onde conseguem mais do que esperavam, descobrindo a verdade atrás da cabana na floresta.', 2);
 
 INSERT INTO tb_review (text, movie_id, user_id) VALUES ('Meh, filme OK', 1, 1);
-INSERT INTO tb_review (text, movie_id, user_id) VALUES ('Gostei e recomendo!', 1, 2);
+INSERT INTO tb_review (text, movie_id, user_id) VALUES ('Gostei e recomendo!', 1, 1);
 INSERT INTO tb_review (text, movie_id, user_id) VALUES ('Que Filme!!!', 2, 1);
