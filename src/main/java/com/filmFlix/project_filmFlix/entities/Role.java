@@ -2,12 +2,13 @@ package com.filmFlix.project_filmFlix.entities;
 
 import com.filmFlix.project_filmFlix.enums.Authority;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_role")
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,8 +34,8 @@ public class Role {
         this.id = id;
     }
 
-    public Authority getAuthority() {
-        return authority;
+    public String getAuthority() {
+        return String.valueOf(authority);
     }
 
     public void setAuthority(Authority authority) {

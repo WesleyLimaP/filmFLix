@@ -24,6 +24,13 @@ public class Review {
         this.movie = movie;
     }
 
+    public Review(String text, User user, Movie movie) {
+        this.text = text;
+        this.user = user;
+        this.movie = movie;
+    }
+
+
     public Review() {
     }
 

@@ -2,17 +2,20 @@ package com.filmFlix.project_filmFlix.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_user")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Column(unique = true, nullable = false)
     private String password;
     @Email
     private String email;
@@ -29,6 +32,10 @@ public class User {
         this.password = password;
         this.email = email;
         this.role = role;
+    }
+
+    public User(Long id) {
+        this.id = id;
     }
 
     public User() {
@@ -50,8 +57,18 @@ public class User {
         this.name = name;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+       return List.of(role);
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return "";
     }
 
     public void setPassword(String password) {
