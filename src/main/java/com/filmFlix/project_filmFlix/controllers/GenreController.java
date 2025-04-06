@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -33,6 +34,7 @@ public class GenreController {
         return ResponseEntity.ok().body(service.findById(id));
     }
     @PostMapping()
+    @PreAuthorize("hasAuthority('ROLE_ADM')")
     public ResponseEntity<GenreDto> insert(
           @RequestBody GenreDto dto)
     {
@@ -41,6 +43,7 @@ public class GenreController {
         return ResponseEntity.created(uri).body(service.insert(dto));
     }
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADM')")
     public ResponseEntity<GenreDto> update(@PathVariable Long id, @RequestBody GenreDto dto)
     {
 

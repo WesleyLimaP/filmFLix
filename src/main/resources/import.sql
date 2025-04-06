@@ -2,7 +2,7 @@ INSERT INTO tb_role(authority) VALUES('ROLE_VISITOR')
 INSERT INTO tb_role(authority) VALUES('ROLE_MEMBER')
 INSERT INTO tb_role(authority) VALUES('ROLE_ADM')
 
-INSERT INTO tb_user (name, password, email, role_id) VALUES ('Bob', '$2a$10$cpTBuvzYW2ANFy0zPCcQxu/qosnI/AVmPX.6tQqaA6roYtLhwo78S','bob@gmail.com', 1);
+INSERT INTO tb_user (name, password, email, role_id) VALUES ('Bob', '$2a$10$cpTBuvzYW2ANFy0zPCcQxu/qosnI/AVmPX.6tQqaA6roYtLhwo78S','bob@gmail.com', 2);
 INSERT INTO tb_user (name, password, email, role_id) VALUES ('Ana', '$2a$10$cpTBuvzYW2ANFy0zPCcQxu/qosnI/AVmPX.6tQqaA6roYtLhwo78S','ana@gmail.com', 2);
 INSERT INTO tb_user (name, password, email, role_id) VALUES ('wesley', '$2a$10$cpTBuvzYW2ANFy0zPCcQxu/qosnI/AVmPX.6tQqaA6roYtLhwo78S','wesley@gmail.com', 3);
 

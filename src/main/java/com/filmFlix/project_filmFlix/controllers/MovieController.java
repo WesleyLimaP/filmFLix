@@ -1,7 +1,7 @@
 package com.filmFlix.project_filmFlix.controllers;
 
-import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDto;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDetailsDto;
+import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDto;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieInsertDto;
 import com.filmFlix.project_filmFlix.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +10,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
 
-@Controller
+@RestController
 @RequestMapping(value = "/movies")
+@EnableMethodSecurity
 public class MovieController {
     @Autowired
     private MovieService service;
@@ -36,6 +38,7 @@ public class MovieController {
         return ResponseEntity.ok().body(service.findById(id));
     }
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADM')")
     public ResponseEntity<MovieInsertDto> insert(@RequestBody MovieInsertDto dto)
     {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -43,12 +46,14 @@ public class MovieController {
         return ResponseEntity.created(uri).body(service.insert(dto));
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADM')")
     public ResponseEntity<Void> delete(@PathVariable Long id)
     {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADM')")
     public ResponseEntity<MovieDetailsDto> update(@PathVariable Long id, @RequestBody MovieInsertDto dto)
     {
 

@@ -44,8 +44,8 @@ public class JwtService {
                     .build()
                     .verify(token).getSubject();
         } catch (JWTVerificationException exception){
-            System.out.println("token invalido");
+            throw new RuntimeException("token invalido");
         }
-        return null;
+
     }
 }

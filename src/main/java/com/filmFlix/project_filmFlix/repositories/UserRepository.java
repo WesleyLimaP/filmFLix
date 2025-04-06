@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
     @Query(value = "select u from User u  where u.email = :email")
-    UserDetails getByName(String email);
+    UserDetails getByEmail(String email);
 }
