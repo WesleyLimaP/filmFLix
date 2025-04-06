@@ -47,7 +47,7 @@ public class MovieService {
     public MovieInsertDto insert(MovieInsertDto dto){
         Movie movie = new Movie(dto.getTitle(), dto.getSubTitle(), dto.getYear(), dto.getImgUrl(), dto.getSynopsis(), new Genre(dto.getGenre()));
         var entitie = repository.save(movie);
-        return Stream.of(entitie).map(x -> new MovieInsertDto(entitie)).toList().getFirst();
+        return new MovieInsertDto(entitie);
     }
     @Transactional
     public void delete(Long id){
@@ -64,8 +64,6 @@ public class MovieService {
         entitie.setSubTitle(dto.getSubTitle());
         entitie.setImgUrl(dto.getImgUrl());
 
-        repository.save(entitie);
-
-        return Stream.of(entitie).map(MovieDetailsDto::new).toList().getFirst();
+        return new MovieDetailsDto( repository.save(entitie));
     }
 }

@@ -30,7 +30,7 @@ public class GenreService {
         public GenreDto insert(GenreDto dto){
            Genre genre = new Genre(dto.getName());
             var entitie = repository.save(genre);
-            return Stream.of(entitie).map(x -> new GenreDto(entitie)).toList().getFirst();
+            return new GenreDto(entitie);
         }
 
         @Transactional
@@ -38,9 +38,7 @@ public class GenreService {
             var entitie = repository.findById(id).orElseThrow(() -> new RuntimeException("id nao encontrado"));
 
            entitie.setName(dto.getName());
-            repository.save(entitie);
-
-            return Stream.of(entitie).map(GenreDto::new).toList().getFirst();
+            return new GenreDto( repository.save(entitie));
         }
     }
 

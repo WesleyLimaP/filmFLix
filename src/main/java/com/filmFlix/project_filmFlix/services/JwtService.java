@@ -17,7 +17,7 @@ public class JwtService {
     @Value("${api.security.token.secret}")
     private String rsaPublicKey;
 
-    @Transactional
+
     public TokenDto createToken(User user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(rsaPublicKey);
@@ -35,7 +35,7 @@ public class JwtService {
 
         return null;
     }
-    @Transactional
+
     public String getSubject (String token){
         try {
             Algorithm algorithm = Algorithm.HMAC256(rsaPublicKey);

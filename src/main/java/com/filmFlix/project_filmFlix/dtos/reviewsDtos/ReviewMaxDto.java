@@ -1,5 +1,6 @@
 package com.filmFlix.project_filmFlix.dtos.reviewsDtos;
 
+import com.filmFlix.project_filmFlix.entities.Review;
 import com.filmFlix.project_filmFlix.projections.ReviewProjection;
 
 public class ReviewMaxDto {
@@ -22,6 +23,12 @@ public class ReviewMaxDto {
         this.movieTitle = projection.getMovie_title();
         this.userName = projection.getUser_name();
         this.text = projection.getText();
+    }
+    public ReviewMaxDto(Review review){
+        this.id = review.getId();
+        this.movieTitle = review.getMovie().getTitle();
+        this.userName = review.getUser().getName();
+        this.text = review.getText();
     }
 
     public String getMovieTitle() {
@@ -46,5 +53,9 @@ public class ReviewMaxDto {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
