@@ -41,6 +41,9 @@ public class User implements UserDetails {
     public User() {
     }
 
+    public User(Long id, String email, Role role) {
+    }
+
     public Long getId() {
         return id;
     }

@@ -17,10 +17,14 @@ public class Role implements GrantedAuthority {
     @OneToMany(mappedBy = "role")
     private Set<User> users;
 
-    public Role(Long id, Authority authority, User user) {
+    public Role(Long id, Authority authority) {
         this.id = id;
         this.authority = authority;
 
+    }
+
+    public Role(Authority authority) {
+        this.authority = authority;
     }
 
     public Role() {
