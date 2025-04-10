@@ -3,6 +3,7 @@ package com.filmFlix.project_filmFlix.controllers;
 import com.filmFlix.project_filmFlix.dtos.reviewsDtos.ReviewMaxDto;
 import com.filmFlix.project_filmFlix.dtos.reviewsDtos.ReviewRequestDto;
 import com.filmFlix.project_filmFlix.services.ReviewService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,7 +39,7 @@ public class ReviewController {
     }
     @PostMapping()
     @PreAuthorize("hasAuthority('ROLE_MEMBER') or hasAuthority('ROLE_ADM')")
-    public ResponseEntity<ReviewMaxDto> insert(@RequestBody ReviewRequestDto dto)
+    public ResponseEntity<ReviewMaxDto> insert(@Valid @RequestBody ReviewRequestDto dto)
     {
         var review = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

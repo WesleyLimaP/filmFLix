@@ -1,14 +1,20 @@
 package com.filmFlix.project_filmFlix.dtos.moviesDtos;
 
 import com.filmFlix.project_filmFlix.entities.Movie;
+import jakarta.validation.constraints.NotBlank;
 
 public class MovieInsertDto {
     private Long id;
+    @NotBlank
     private String title;
     private String subTitle;
+    @NotBlank
     private Long year;
+    @NotBlank
     private String imgUrl;
+    @NotBlank
     private String synopsis;
+    @NotBlank
     private Long genre;
 
     public MovieInsertDto(String title, String subTitle, Long year, String imgUrl, String synopsis, Long genre) {

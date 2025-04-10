@@ -1,5 +1,6 @@
 package com.filmFlix.project_filmFlix.services;
 
+import com.filmFlix.project_filmFlix.Exceptions.ResourcesNotFoundException;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDto;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDetailsDto;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieInsertDto;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 
@@ -35,13 +37,20 @@ public class MovieService {
 
     @Transactional
     public MovieDetailsDto findById(Long id){
-       var result = repository.searchById(id);
-       MovieDetailsDto movieInfoDto = new MovieDetailsDto(result.getFirst());
-
-        for (MovieDetailsProjection reviews : result) {
+        try {
+            var result = repository.searchById(id);
+            MovieDetailsDto movieInfoDto = new MovieDetailsDto(result.getFirst());
+            for (MovieDetailsProjection reviews : result) {
                 movieInfoDto.getReviews().add(new ReviewDto(reviews));
+            }
+            return movieInfoDto;
+        } catch (Exception e) {
+            throw new ResourcesNotFoundException("filme nao encontrado");
         }
-        return movieInfoDto;
+
+
+
+
     }
     @Transactional
     public MovieInsertDto insert(MovieInsertDto dto){
@@ -50,12 +59,14 @@ public class MovieService {
         return new MovieInsertDto(entitie);
     }
     @Transactional
-    public void delete(Long id){
-        repository.removeById(id);
+    public void delete(Long id) {
+        if (repository.removeById(id) == 0) {
+            throw new ResourcesNotFoundException("filme nao encontrado");
+        }
     }
     @Transactional
     public MovieDetailsDto update(Long id, MovieInsertDto dto){
-        var entitie = repository.findById(id).orElseThrow(() -> new RuntimeException("id nao encontrado"));
+        var entitie = repository.findById(id).orElseThrow(() -> new ResourcesNotFoundException("filme nao encontrado"));
 
         entitie.setGenre(new Genre(dto.getGenre()));
         entitie.setMovieYear(dto.getYear());

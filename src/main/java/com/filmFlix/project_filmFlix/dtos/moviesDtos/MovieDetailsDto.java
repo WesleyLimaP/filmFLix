@@ -7,7 +7,6 @@ import com.filmFlix.project_filmFlix.projections.MovieDetailsProjection;
 
 import java.util.HashSet;
 import java.util.Set;
-//to do: add id aqui e nas projections
 
 public class MovieDetailsDto {
     private String title;

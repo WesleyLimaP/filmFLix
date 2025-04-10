@@ -1,5 +1,7 @@
 package com.filmFlix.project_filmFlix.services;
 
+import com.filmFlix.project_filmFlix.Exceptions.ResourcesNotFoundException;
+import com.filmFlix.project_filmFlix.Exceptions.UnauthorizedException;
 import com.filmFlix.project_filmFlix.dtos.genreDtos.GenreDto;
 import com.filmFlix.project_filmFlix.dtos.reviewsDtos.ReviewDto;
 import com.filmFlix.project_filmFlix.dtos.reviewsDtos.ReviewMaxDto;
@@ -11,6 +13,7 @@ import com.filmFlix.project_filmFlix.projections.ReviewProjection;
 import com.filmFlix.project_filmFlix.repositories.MovieRepository;
 import com.filmFlix.project_filmFlix.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,12 +35,12 @@ public class ReviewService {
     }
 
     @Transactional
-    public ReviewMaxDto insert(ReviewRequestDto dto) {
+    public ReviewMaxDto insert(ReviewRequestDto dto)  {
         var userAuth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) userAuth.getPrincipal();
         Review review = new Review();
         review.setText(dto.text());
-        review.setMovie(movieRepository.findById(dto.moivieId()).get());
+        review.setMovie(movieRepository.findById(dto.moivieId()).orElseThrow(() -> new ResourcesNotFoundException("filme nao encontrado")));
         review.setUser(user);
         var entity = repository.save(review);
         return new ReviewMaxDto(entity);
@@ -45,16 +48,16 @@ public class ReviewService {
 
     @Transactional
     public ReviewMaxDto findById(Long id){
-        return repository.findById(id).map(ReviewMaxDto::new).orElseThrow(()-> new RuntimeException("id nao encontrado"));
+        return repository.findById(id).map(ReviewMaxDto::new).orElseThrow(()-> new ResourcesNotFoundException("filme nao encontrado"));
     }
 
     @Transactional
     public void delete(Long id){
         var userAuth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) userAuth.getPrincipal();
-        Review review = repository.findById(id).get();
+        Review review = repository.findById(id).orElseThrow(()-> new ResourcesNotFoundException("filme nao encontrado"));
         if(!review.getUser().getId().equals(user.getId())){
-            throw new RuntimeException("voce nao pode apagar este comentario");
+            throw new UnauthorizedException("voce nao pode apagar este comentario");
         }
         repository.deleteById(id);
     }
@@ -62,9 +65,9 @@ public class ReviewService {
     public ReviewMaxDto update(Long id, ReviewRequestDto dto){
         var userAuth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) userAuth.getPrincipal();
-        Review review = repository.findById(id).get();
+        Review review = repository.findById(id).orElseThrow(()-> new ResourcesNotFoundException("filme nao encontrado"));
         if(!review.getUser().getId().equals(user.getId())){
-            throw new RuntimeException("voce nao pode auterar este comentario");
+            throw new UnauthorizedException("voce nao pode auterar este comentario");
         }
         review.setText(dto.text());
         var entity = repository.save(review);

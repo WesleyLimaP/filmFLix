@@ -17,8 +17,7 @@ public class JwtService {
     private String rsaPublicKey;
 
 
-    public TokenDto createToken(User user) {
-        try {
+    public TokenDto createToken(User user) throws JWTCreationException{
             Algorithm algorithm = Algorithm.HMAC256(rsaPublicKey);
             var token = JWT.create()
                     .withIssuer("filmFlix")
@@ -28,11 +27,6 @@ public class JwtService {
                     .withExpiresAt(Instant.now().plusSeconds(1800))
                     .sign(algorithm);
             return new TokenDto(token);
-        } catch (JWTCreationException exception) {
-            System.out.println("erro ao gerar o token");
-        }
-
-        return null;
     }
 
     public String getSubject (String token){

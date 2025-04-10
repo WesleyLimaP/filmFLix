@@ -1,7 +1,7 @@
 package com.filmFlix.project_filmFlix.config;
 
+import com.filmFlix.project_filmFlix.repositories.UserRepository;
 import com.filmFlix.project_filmFlix.services.JwtService;
-import com.filmFlix.project_filmFlix.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     private JwtService service;
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
 
     @Override
@@ -28,7 +28,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if(token != null) {
             var subject = service.getSubject(token);
-            var user = userService.loadUserByUsername(subject);
+            var user = userRepository.getByEmail(subject);
 
             var authenticate = UsernamePasswordAuthenticationToken.authenticated(
                     user, null, user.getAuthorities()

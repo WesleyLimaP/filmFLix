@@ -1,5 +1,7 @@
 package com.filmFlix.project_filmFlix.services;
 
+import com.filmFlix.project_filmFlix.Exceptions.DuplacationEntityException;
+import com.filmFlix.project_filmFlix.Exceptions.ResourcesNotFoundException;
 import com.filmFlix.project_filmFlix.dtos.genreDtos.GenreDto;
 import com.filmFlix.project_filmFlix.entities.Genre;
 import com.filmFlix.project_filmFlix.repositories.GenreRepository;
@@ -24,21 +26,30 @@ public class GenreService {
 
         @Transactional
         public GenreDto findById(Long id){
-            return repository.findById(id).map(GenreDto::new).orElseThrow(()-> new RuntimeException("id nao encontrado"));
+            return repository.findById(id).map(GenreDto::new).orElseThrow(()-> new ResourcesNotFoundException("id nao encontrado"));
         }
         @Transactional
         public GenreDto insert(GenreDto dto){
-           Genre genre = new Genre(dto.getName());
-            var entitie = repository.save(genre);
-            return new GenreDto(entitie);
+            try {
+                Genre genre = new Genre(dto.getName());
+                var entitie = repository.save(genre);
+                return new GenreDto(entitie);
+            } catch (Exception e) {
+                throw new DuplacationEntityException("categoria ja existe");
+            }
+
         }
 
         @Transactional
         public GenreDto update(Long id, GenreDto dto){
-            var entitie = repository.findById(id).orElseThrow(() -> new RuntimeException("id nao encontrado"));
+            try {
+                var entitie = repository.findById(id).orElseThrow(() -> new RuntimeException("id nao encontrado"));
+                entitie.setName(dto.getName());
+                return new GenreDto( repository.save(entitie));
+            } catch (Exception e) {
+                throw new DuplacationEntityException(e.getMessage());
+            }
 
-           entitie.setName(dto.getName());
-            return new GenreDto( repository.save(entitie));
         }
     }
 

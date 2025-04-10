@@ -12,13 +12,10 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
     private String title;
     private String subTitle;
     private Long movieYear;
-    @NotBlank
     private String imgUrl;
-    @NotBlank
     @Column(columnDefinition = "Text")
     private String synopsis;
     @OneToMany(mappedBy = "movie")
