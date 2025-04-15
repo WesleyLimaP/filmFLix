@@ -8,12 +8,14 @@ public class MovieDto {
     private String sub_title;
     private Long movie_year;
     private String img_url;
+    private Long genreId;
 
-    public MovieDto(String title, String sub_title, Long movie_year, String img_url) {
+    public MovieDto(String title, String sub_title, Long movie_year, String img_url, Long genreId) {
         this.title = title;
         this.sub_title = sub_title;
         this.movie_year = movie_year;
         this.img_url = img_url;
+        this.genreId = genreId;
     }
 
     public MovieDto(MovieProjection projection) {
@@ -21,6 +23,7 @@ public class MovieDto {
         this.sub_title = projection.getSub_title();
         this.movie_year = projection.getMovie_year();
         this.img_url = projection.getImg_url();
+        this.genreId = projection.getGenre_Id();
     }
 
     public MovieDto() {
@@ -63,5 +66,13 @@ public class MovieDto {
 
     public void setImg_url(String img_url) {
         this.img_url = img_url;
+    }
+
+    public Long getGenreId() {
+        return genreId;
+    }
+
+    public void setGenreId(Long genreId) {
+        this.genreId = genreId;
     }
 }

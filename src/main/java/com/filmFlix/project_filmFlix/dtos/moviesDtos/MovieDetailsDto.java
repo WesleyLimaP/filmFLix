@@ -26,6 +26,16 @@ public class MovieDetailsDto {
         this.genre = projection.getName();
 
     }
+
+    public MovieDetailsDto(String title, String subTitle, Long year, String imgUrl, String synopsis, String genre) {
+        this.title = title;
+        this.subTitle = subTitle;
+        this.year = year;
+        this.imgUrl = imgUrl;
+        this.synopsis = synopsis;
+        this.genre = genre;
+    }
+
     public MovieDetailsDto(Movie movie) {
         this.title = movie.getTitle();
         this.subTitle = movie.getSubTitle();

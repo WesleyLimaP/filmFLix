@@ -3,6 +3,7 @@ package com.filmFlix.project_filmFlix.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -19,7 +20,7 @@ public class Movie {
     @Column(columnDefinition = "Text")
     private String synopsis;
     @OneToMany(mappedBy = "movie")
-    private Set<Review> reviews;
+    private Set<Review> reviews = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "genre_id")
     private Genre genre;

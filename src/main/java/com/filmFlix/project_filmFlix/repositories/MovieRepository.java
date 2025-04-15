@@ -18,7 +18,7 @@ import java.util.Optional;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query(nativeQuery = true, value = """
-            SELECT TB_MOVIE.TITLE, TB_MOVIE.SUB_TITLE, TB_MOVIE.MOVIE_YEAR , TB_MOVIE.IMG_URL
+            SELECT TB_MOVIE.TITLE, TB_MOVIE.SUB_TITLE, TB_MOVIE.MOVIE_YEAR , TB_MOVIE.IMG_URL, TB_MOVIE.GENRE_ID
             FROM TB_MOVIE
             where TB_MOVIE.GENRE_ID = :idGenre"""
     )

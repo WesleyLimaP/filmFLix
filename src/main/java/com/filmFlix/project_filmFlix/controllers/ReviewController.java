@@ -47,12 +47,14 @@ public class ReviewController {
         return ResponseEntity.created(uri).body(review);
     }
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('ROLE_MEMBER') or hasAuthority('ROLE_ADM')")
     public ResponseEntity<ReviewMaxDto> update(@PathVariable Long id, @RequestBody ReviewRequestDto dto)
     {
 
         return ResponseEntity.ok( service.update(id, dto));
     }
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAuthority('ROLE_MEMBER') or hasAuthority('ROLE_ADM')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent( ).build();

@@ -17,6 +17,11 @@ public class ReviewDto {
         this.userName = review.getUser().getName();
     }
 
+    public ReviewDto(String text, String userName) {
+        this.text = text;
+        this.userName = userName;
+    }
+
     public ReviewDto() {
     }
 
