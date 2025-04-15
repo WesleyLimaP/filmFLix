@@ -6,6 +6,7 @@ import com.filmFlix.project_filmFlix.dtos.genreDtos.GenreDto;
 import com.filmFlix.project_filmFlix.entities.Genre;
 import com.filmFlix.project_filmFlix.repositories.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -43,10 +44,10 @@ public class GenreService {
         @Transactional
         public GenreDto update(Long id, GenreDto dto){
             try {
-                var entitie = repository.findById(id).orElseThrow(() -> new RuntimeException("id nao encontrado"));
+                var entitie = repository.findById(id).orElseThrow(() -> new ResourcesNotFoundException("id nao encontrado"));
                 entitie.setName(dto.getName());
                 return new GenreDto( repository.save(entitie));
-            } catch (Exception e) {
+            } catch (DataIntegrityViolationException e) {
                 throw new DuplacationEntityException(e.getMessage());
             }
 

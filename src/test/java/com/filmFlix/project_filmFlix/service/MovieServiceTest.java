@@ -20,10 +20,10 @@ import org.mockito.Mockito;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
 @ExtendWith(SpringExtension.class)
@@ -101,6 +101,7 @@ public class MovieServiceTest {
        var pages = service.findAll(0L, pageable);
        Assertions.assertNotNull(pages);
        Assertions.assertTrue(pages.getTotalElements() > 0);
+       Mockito.verify(repository, Mockito.times(1)).searchAll(pageable);
 
     }
     @Test
@@ -118,6 +119,7 @@ public class MovieServiceTest {
     var pageable = PageRequest.of(0, 5);
        var pages = service.findAll(invalidId, pageable);
        Assertions.assertEquals(0,  pages.getTotalElements());
+       Mockito.verify(repository, Mockito.times(1)).findByGenre(eq(invalidId), ArgumentMatchers.any());
 
     }
     @Test
@@ -131,8 +133,10 @@ public class MovieServiceTest {
     @Test
     public void deleteShouldDoNothingWhenValidId(){
         service.delete(validId);
+        Mockito.verify(repository, Mockito.times(1)).removeById(validId);
         Assertions.assertDoesNotThrow(() ->service.delete(validId));
         Assertions.assertTrue(repository.removeById(validId) > 0);
+
 
     }
     @Test
@@ -146,6 +150,7 @@ public class MovieServiceTest {
     public void updateShouldReturnMovieDetailsDtoWhenValidId(){
         var dto = service.update(validId, insertDto);
         Assertions.assertEquals(MovieDetailsDto.class, dto.getClass());
+        Assertions.assertEquals(insertDto.getTitle(), dto.getTitle());
         Mockito.verify(repository, Mockito.times(1)).save(ArgumentMatchers.any());
 
     }
@@ -154,6 +159,7 @@ public class MovieServiceTest {
         Assertions.assertThrows(ResourcesNotFoundException.class, () -> {
             service.update(invalidId, insertDto);
         });
+        Mockito.verify(repository, Mockito.times(1)).findById(invalidId);
 
     }
 
