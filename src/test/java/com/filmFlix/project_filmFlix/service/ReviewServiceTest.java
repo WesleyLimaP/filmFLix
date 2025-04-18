@@ -64,8 +64,7 @@ public class ReviewServiceTest {
         validId = 1L;
         invalidId = 2L;
         movie = new Movie();
-        user = new User();
-        user.setId(1L);
+        user = new User(1L);
         review = new Review();
         review.setId(validId);
         review.setText("Muito bom!");
@@ -194,8 +193,7 @@ public class ReviewServiceTest {
     }
 
     private void mockAuthenticationWithDifferentUser() {
-        User otherUser = new User();
-        otherUser.setId(99L);
+        User otherUser = new User(99L);
         var authentication = Mockito.mock(Authentication.class);
         Mockito.when(authentication.getPrincipal()).thenReturn(otherUser);
         var context = Mockito.mock(SecurityContext.class);

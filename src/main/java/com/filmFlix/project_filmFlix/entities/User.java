@@ -2,14 +2,22 @@ package com.filmFlix.project_filmFlix.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tb_user")
 public class User implements UserDetails {
     @Id
@@ -27,7 +35,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id")
     private Role role;
     @OneToMany(mappedBy = "user")
-    private Set<Review> reviews;
+    private Set<Review> reviews = new HashSet<>();
 
     public User(Long id, String name, String password, String email, Role role) {
         this.id = id;
@@ -41,9 +49,6 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public User() {
-    }
-
     public User(Long id, String email, Role role) {
     }
 
@@ -51,9 +56,6 @@ public class User implements UserDetails {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -74,19 +76,19 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return "";
+        return email;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public Role getRole() {

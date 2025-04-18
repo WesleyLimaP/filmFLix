@@ -7,6 +7,7 @@ import com.filmFlix.project_filmFlix.entities.User;
 import com.filmFlix.project_filmFlix.repositories.RoleRepository;
 import com.filmFlix.project_filmFlix.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,7 +41,7 @@ public class UserService implements UserDetailsService {
             newUser.setPassword(passwordEncoder.encode(request.password()));
 
             return  repository.save(newUser);
-        } catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
             throw new DuplacationEntityException("dados invalidos ");
         }
 

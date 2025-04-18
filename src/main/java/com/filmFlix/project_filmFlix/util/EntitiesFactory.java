@@ -2,14 +2,14 @@ package com.filmFlix.project_filmFlix.util;
 
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDetailsDto;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieInsertDto;
-import com.filmFlix.project_filmFlix.dtos.reviewsDtos.ReviewDto;
-import com.filmFlix.project_filmFlix.entities.Genre;
-import com.filmFlix.project_filmFlix.entities.Movie;
-import com.filmFlix.project_filmFlix.entities.Review;
-import com.filmFlix.project_filmFlix.entities.User;
+import com.filmFlix.project_filmFlix.entities.*;
+import com.filmFlix.project_filmFlix.dtos.authDtos.SingUpRequestDto;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public class EntitiesFactory {
-
+    public static SingUpRequestDto createSingUpRequest(){
+        return new SingUpRequestDto("wesley", "teste", "wesleylima029@gmail.com");
+    }
     public static MovieInsertDto createMovieInsertDto(){
         return new MovieInsertDto(
 
@@ -45,6 +45,15 @@ public class EntitiesFactory {
                 "Comédia"
         );
         return dto;
+    }
+
+    public static UserDetails createUser(){
+        return User.builder()
+                .id(1L)
+                .name("Wesley")
+                .email("wesleylima029@gmail.com")
+                .password("teste")
+                .build();
     }
 
 }
