@@ -4,6 +4,7 @@ import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDetailsDto;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieInsertDto;
 import com.filmFlix.project_filmFlix.entities.*;
 import com.filmFlix.project_filmFlix.dtos.authDtos.SingUpRequestDto;
+import com.filmFlix.project_filmFlix.enums.Authority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class EntitiesFactory {
@@ -53,6 +54,7 @@ public class EntitiesFactory {
                 .name("Wesley")
                 .email("wesleylima029@gmail.com")
                 .password("teste")
+                .role(new Role(Authority.ROLE_MEMBER))
                 .build();
     }
 

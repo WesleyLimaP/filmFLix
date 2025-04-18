@@ -17,7 +17,7 @@ public class JwtService {
     private String rsaPublicKey;
 
 
-    public TokenDto createToken(User user) throws JWTCreationException{
+    public TokenDto createToken(User user) throws JWTCreationException, IllegalArgumentException{
             Algorithm algorithm = Algorithm.HMAC256(rsaPublicKey);
             var token = JWT.create()
                     .withIssuer("filmFlix")
