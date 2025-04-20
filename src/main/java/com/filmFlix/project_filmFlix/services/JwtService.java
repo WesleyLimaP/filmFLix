@@ -23,7 +23,7 @@ public class JwtService {
                     .withIssuer("filmFlix")
                     .withClaim("id", user.getId())
                     .withSubject(user.getEmail())
-                    .withClaim("role:", String.valueOf(user.getRole().getAuthority()))
+                    .withClaim("role", String.valueOf(user.getRole().getAuthority()))
                     .withExpiresAt(Instant.now().plusSeconds(1800))
                     .sign(algorithm);
             return new TokenDto(token);

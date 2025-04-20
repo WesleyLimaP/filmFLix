@@ -1,11 +1,17 @@
 package com.filmFlix.project_filmFlix.util;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.filmFlix.project_filmFlix.dtos.authDtos.SingUpRequestDto;
+import com.filmFlix.project_filmFlix.dtos.authDtos.TokenDto;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDetailsDto;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieInsertDto;
 import com.filmFlix.project_filmFlix.entities.*;
-import com.filmFlix.project_filmFlix.dtos.authDtos.SingUpRequestDto;
 import com.filmFlix.project_filmFlix.enums.Authority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.time.Instant;
 
 public class EntitiesFactory {
     public static SingUpRequestDto createSingUpRequest(){
@@ -51,11 +57,48 @@ public class EntitiesFactory {
     public static UserDetails createUser(){
         return User.builder()
                 .id(1L)
-                .name("Wesley")
-                .email("wesleylima029@gmail.com")
+                .name("Bob")
+                .email("bob@gmail.com")
                 .password("teste")
-                .role(new Role(Authority.ROLE_MEMBER))
+                .role(new Role(Authority.ROLE_ADM))
                 .build();
     }
+    public static TokenDto createToken() throws JWTCreationException, IllegalArgumentException {
+        Algorithm algorithm = Algorithm.HMAC256("123456");
+        var token = JWT.create()
+                .withIssuer("filmFlix")
+                .withClaim("id", 1L)
+                .withSubject("bob@gmail.com")
+                .withClaim("role", "ROLE_MEMBER")
+                .withExpiresAt(Instant.now().plusSeconds(1800))
+                .sign(algorithm);
+        return new TokenDto(token);
 
+
+    }
+    public static TokenDto createADMToken() throws JWTCreationException, IllegalArgumentException {
+        Algorithm algorithm = Algorithm.HMAC256("123456");
+        var token = JWT.create()
+                .withIssuer("filmFlix")
+                .withClaim("id", 3L)
+                .withSubject("wesley@gmail.com")
+                .withClaim("role", "ROLE_ADM")
+                .withExpiresAt(Instant.now().plusSeconds(1800))
+                .sign(algorithm);
+        return new TokenDto(token);
+
+
+    }    public static TokenDto createInvalidToken() throws JWTCreationException, IllegalArgumentException {
+        Algorithm algorithm = Algorithm.HMAC256("12356");
+        var token = JWT.create()
+                .withIssuer("filmFlix")
+                .withClaim("id", 3L)
+                .withSubject("wesley@gmail.com")
+                .withClaim("role", "ROLE_ADM")
+                .withExpiresAt(Instant.now().plusSeconds(1800))
+                .sign(algorithm);
+        return new TokenDto(token);
+
+
+    }
 }
