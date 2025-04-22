@@ -4,9 +4,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.filmFlix.project_filmFlix.dtos.authDtos.SingUpRequestDto;
+import com.filmFlix.project_filmFlix.dtos.authDtos.LoginRequest;
+import com.filmFlix.project_filmFlix.dtos.authDtos.SingUpRequestDto;
 import com.filmFlix.project_filmFlix.dtos.authDtos.TokenDto;
+import com.filmFlix.project_filmFlix.dtos.genreDtos.GenreDto;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDetailsDto;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieInsertDto;
+import com.filmFlix.project_filmFlix.dtos.reviewsDtos.ReviewRequestDto;
 import com.filmFlix.project_filmFlix.entities.*;
 import com.filmFlix.project_filmFlix.enums.Authority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +30,17 @@ public class EntitiesFactory {
                 "https://imagem.com/poster.jpg",
                 "Um grupo parte em uma jornada para destruir o Um Anel.",
                 1L
+        );
+    }
+    public static MovieInsertDto createMovieInsertDtoWitchInvalidGenre(){
+        return new MovieInsertDto(
+
+                "O Senhor dos Anéis",
+                "A Sociedade do Anel",
+                2001L,
+                "https://imagem.com/poster.jpg",
+                "Um grupo parte em uma jornada para destruir o Um Anel.",
+                5L
         );
     }
     public static Movie createMovie(){
@@ -100,5 +115,24 @@ public class EntitiesFactory {
         return new TokenDto(token);
 
 
+    }
+    public static GenreDto createGenreDto(){
+        return new GenreDto("Pop");
+    }
+    public static LoginRequest createLoginRequest(){
+        return new LoginRequest("bob@gmail.com", "123456");
+    }
+    public static LoginRequest createInvalidLoginRequest(){
+        return new LoginRequest("bobb@gmail.com", "123456");
+    }
+    public static SingUpRequestDto createSignUpRequest(){
+        return new SingUpRequestDto("chester", "1234567h", "chester@gmail.com");
+
+    }public static SingUpRequestDto createInvalidSignUpRequest(){
+        return new SingUpRequestDto("bob", "123456", "bob@gmail.com");
+    }
+
+    public static ReviewRequestDto createReviewRequestDto() {
+        return new ReviewRequestDto(1L, "teste");
     }
 }

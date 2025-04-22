@@ -35,7 +35,7 @@ public class GenreService {
                 Genre genre = new Genre(dto.getName());
                 var entitie = repository.save(genre);
                 return new GenreDto(entitie);
-            } catch (Exception e) {
+            } catch (DataIntegrityViolationException e) {
                 throw new DuplacationEntityException("categoria ja existe");
             }
 
@@ -46,9 +46,10 @@ public class GenreService {
             try {
                 var entitie = repository.findById(id).orElseThrow(() -> new ResourcesNotFoundException("id nao encontrado"));
                 entitie.setName(dto.getName());
-                return new GenreDto( repository.save(entitie));
+                var genre = repository.saveAndFlush(entitie);
+                return new GenreDto(genre);
             } catch (DataIntegrityViolationException e) {
-                throw new DuplacationEntityException(e.getMessage());
+                throw new DuplacationEntityException("nome de genero em uso");
             }
 
         }

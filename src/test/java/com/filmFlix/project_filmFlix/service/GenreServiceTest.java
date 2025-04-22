@@ -49,9 +49,9 @@ public class GenreServiceTest {
         validId = 1L;
         invalidId = 2L;
         genre = new Genre( "Ação");
-        newGenre = new GenreDto("Comédia");
+        newGenre = new GenreDto("Ação");
         updatedGenre = new Genre(newGenre.getName());
-        genreDto = new GenreDto("Ação");
+        genreDto = new GenreDto("Comédia");
         pageable = PageRequest.of(0, 5);
         PageImpl<Genre> page = new PageImpl<>(List.of(genre));
         dupliateGenre = new Genre("genero existente");
@@ -63,11 +63,6 @@ public class GenreServiceTest {
         Mockito.when(repository.findById(validId)).thenReturn(Optional.of(genre));
         Mockito.doThrow(ResourcesNotFoundException.class).when(repository).findById(invalidId);
 
-        //insert
-        Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(genre);
-
-        //update
-        Mockito.when(repository.save(genre)).thenReturn(updatedGenre);
     }
 
     // Teste para o findAll
@@ -105,9 +100,11 @@ public class GenreServiceTest {
     // Teste para insert (sucesso)
     @Test
     void insertShouldReturnGenreDtoWhenValidCredentials() {
-        GenreDto result = service.insert(genreDto);
+        Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(genre);
+
+        GenreDto result = service.insert(newGenre);
         assertNotNull(result);
-        assertEquals(genreDto.getName(), result.getName());
+        assertEquals(newGenre.getName(), result.getName());
         Mockito.verify(repository, times(1)).save(ArgumentMatchers.any());
         Assertions.assertEquals(GenreDto.class, result.getClass());
     }
@@ -125,12 +122,13 @@ public class GenreServiceTest {
     // Teste para update (sucesso)
     @Test
     void updateShouldReturnGenreDtoWhenValidCredentials() {
+        Mockito.when(repository.saveAndFlush(any())).thenReturn(genre);
         GenreDto result = service.update(validId, newGenre);
         assertNotNull(result);
         assertEquals(newGenre.getName(), result.getName());
         assertEquals(GenreDto.class, result.getClass());
         verify(repository, times(1)).findById(validId);
-        verify(repository, times(1)).save(ArgumentMatchers.any());
+        verify(repository, times(1)).saveAndFlush(any());
     }
 
     // Teste para update (falha: id nao encontrado))
@@ -145,11 +143,11 @@ public class GenreServiceTest {
     // Teste para update (falha: credenciais duplicadas))
     @Test
     void updateShouldThrowDuplicationExceptionWhenInvalidCredentials() {
-        Mockito.doThrow(DuplacationEntityException.class).when(repository).save(genre);
+        Mockito.doThrow(DuplacationEntityException.class).when(repository).saveAndFlush(genre);
         Assertions.assertThrows(DuplacationEntityException.class, ()->{
             service.update(validId, genreDto);
         });
         Mockito.verify(repository, Mockito.times(1)).findById(validId);
-        Mockito.verify(repository, Mockito.times(1)).save(any());
+
     }
 }

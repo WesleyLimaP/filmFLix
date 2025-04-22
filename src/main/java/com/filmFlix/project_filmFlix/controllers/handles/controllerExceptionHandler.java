@@ -67,7 +67,7 @@ public class controllerExceptionHandler {
         return ResponseEntity.status(status).body(dto);
     }
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ExceptionDto> unauthorizedExcption (UnauthorizedException e, HttpServletRequest request){
+    public ResponseEntity<ExceptionDto> unauthorizedException(UnauthorizedException e, HttpServletRequest request){
         var status = HttpStatus.UNAUTHORIZED;
         ExceptionDto dto = new ExceptionDto(LocalDate.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(dto);

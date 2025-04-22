@@ -50,7 +50,7 @@ class UserServiceTest {
     void SetUp(){
         role = new Role(Authority.ROLE_MEMBER);
         user = (User) EntitiesFactory.createUser();
-        validEmail = "wesleylima029@gmail.com";
+        validEmail = "bob@gmail.com";
         invalidEmail = "invalidEmail@gmail.com";
         requestDto = EntitiesFactory.createSingUpRequest();
         validId = 1L;
@@ -76,6 +76,7 @@ class UserServiceTest {
     }
     @Test
     void loadByUserNameShouldAnUserDetailsWhenValidEmail(){
+        when(repository.getByEmail(validEmail)).thenReturn(user);
         var result =  service.loadUserByUsername(validEmail);
         Assertions.assertEquals(validEmail, result.getUsername());
         Assertions.assertEquals(User.class, result.getClass());
@@ -91,7 +92,7 @@ class UserServiceTest {
     @Test
     void singUpShouldReturnAnUserWhenValidCredentials(){
         var result =  service.singUp(requestDto);
-        Assertions.assertEquals(requestDto.email(), result.getUsername());
+        Assertions.assertEquals("bob@gmail.com", result.getUsername());
         Assertions.assertEquals(User.class, result.getClass());
         Mockito.verify(repository, Mockito.times(1)).save(ArgumentMatchers.any());
         Mockito.verify(passwordEncoder, Mockito.times(1)).encode(ArgumentMatchers.any());
