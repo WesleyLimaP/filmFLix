@@ -2,6 +2,13 @@
 filmFLix é uma API RESTful desenvolvida com Java + Spring Boot para gerenciamento de um catálogo de filmes. Ela suporta autenticação com JWT, 
 controle de acesso baseado em papéis (admin/membro), CRUD de filmes, gêneros e avaliações, além de recuperação de senha por e-mail.
 
+simulação de como seria o front end: https://www.figma.com/file/6JQVnxKgKtVHLleSBBgRin/MovieFlix-front-listagem
+
+
+![Desktop Screenshot 2025 05 01 - 18 09 44 79](https://github.com/user-attachments/assets/94a1942f-d1bb-4808-bc71-9300b451c166)
+
+
+
 
 ⚙️ Funcionalidades
 Cadastro e login com geração de JWT.
@@ -90,5 +97,3 @@ ROLE_MEMBER: Pode criar e gerenciar suas reviews
 
 Token é gerado e validado com o JwtService.
 
-
-![Desktop Screenshot 2025 05 01 - 18 09 44 79](https://github.com/user-attachments/assets/254cf148-5d35-4efc-9b14-e5deb2fb7f2e)
