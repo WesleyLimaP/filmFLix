@@ -19,7 +19,7 @@ Paginação nos endpoints de listagem.
 Controle de acesso via roles (ROLE_ADM, ROLE_MEMBER).
 
 🛠 Tecnologias
-Java 17+
+Java 
 
 Spring Boot
 
