@@ -89,3 +89,6 @@ ROLE_ADM: Acesso total (filmes, gêneros)
 ROLE_MEMBER: Pode criar e gerenciar suas reviews
 
 Token é gerado e validado com o JwtService.
+
+
+![Desktop Screenshot 2025 05 01 - 18 09 44 79](https://github.com/user-attachments/assets/254cf148-5d35-4efc-9b14-e5deb2fb7f2e)
