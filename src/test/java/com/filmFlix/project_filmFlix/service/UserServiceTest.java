@@ -8,7 +8,7 @@ import com.filmFlix.project_filmFlix.entities.User;
 import com.filmFlix.project_filmFlix.enums.Authority;
 import com.filmFlix.project_filmFlix.repositories.RoleRepository;
 import com.filmFlix.project_filmFlix.repositories.UserRepository;
-import com.filmFlix.project_filmFlix.services.UserService;
+import com.filmFlix.project_filmFlix.services.AuthService;
 import com.filmFlix.project_filmFlix.util.EntitiesFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 class UserServiceTest {
     @InjectMocks
-    private UserService service;
+    private AuthService service;
     @Mock
     private UserRepository repository;
     @Mock

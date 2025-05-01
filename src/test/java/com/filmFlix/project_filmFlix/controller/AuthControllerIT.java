@@ -1,7 +1,7 @@
 package com.filmFlix.project_filmFlix.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.filmFlix.project_filmFlix.services.JwtService;
-import com.filmFlix.project_filmFlix.services.UserService;
+import com.filmFlix.project_filmFlix.services.AuthService;
 import com.filmFlix.project_filmFlix.util.EntitiesFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class AuthControllerIT {
     @Autowired
     private JwtService jwtService;
     @Autowired
-    private UserService userservice;
+    private AuthService userservice;
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired

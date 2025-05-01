@@ -29,6 +29,10 @@ public class SecurityConfig {
                         "/auth/login").permitAll())
                 .authorizeHttpRequests(x -> x.requestMatchers(HttpMethod.POST,
                         "/auth/sing-up").permitAll())
+                .authorizeHttpRequests(x -> x.requestMatchers(HttpMethod.POST,
+                        "/auth/recover-password").permitAll())
+                .authorizeHttpRequests(x -> x.requestMatchers(HttpMethod.PUT,
+                        "/auth/reset-password").permitAll())
                 .authorizeHttpRequests(x -> x.anyRequest().authenticated())
                 .sessionManagement(x-> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
