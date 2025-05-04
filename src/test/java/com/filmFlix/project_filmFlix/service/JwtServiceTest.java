@@ -1,10 +1,7 @@
 package com.filmFlix.project_filmFlix.service;
 
-import com.auth0.jwt.exceptions.JWTCreationException;
 import com.filmFlix.project_filmFlix.dtos.authDtos.TokenDto;
-import com.filmFlix.project_filmFlix.entities.Role;
 import com.filmFlix.project_filmFlix.entities.User;
-import com.filmFlix.project_filmFlix.enums.Authority;
 import com.filmFlix.project_filmFlix.services.JwtService;
 import com.filmFlix.project_filmFlix.util.EntitiesFactory;
 import org.junit.jupiter.api.Assertions;

@@ -15,6 +15,7 @@ public class MovieDetailsDto {
     private String imgUrl;
     private String synopsis;
     private String genre;
+    private Double userRating;
     private Set<ReviewDto> reviews = new HashSet<>();
 
     public MovieDetailsDto(MovieDetailsProjection projection) {
@@ -24,6 +25,7 @@ public class MovieDetailsDto {
         this.imgUrl = projection.getImg_url();
         this.synopsis = projection.getSynopsis();
         this.genre = projection.getName();
+        this.userRating = projection.getUser_ratings();
 
     }
 
@@ -43,6 +45,7 @@ public class MovieDetailsDto {
         this.imgUrl = movie.getImgUrl();
         this.synopsis = movie.getSynopsis();
         this.genre = String.valueOf(movie.getGenre().getId());
+        this.userRating = movie.getUserRatings();
 
         for(Review review: movie.getReviews()){
             this.getReviews().add(new ReviewDto(review));
@@ -106,6 +109,11 @@ public class MovieDetailsDto {
         return reviews;
     }
 
+    public Double getUserRating() {
+        return userRating;
+    }
 
-
+    public void setUserRating(Double userRating) {
+        this.userRating = userRating;
+    }
 }

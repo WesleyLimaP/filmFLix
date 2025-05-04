@@ -8,4 +8,5 @@ public interface MovieDetailsProjection {
     String getSynopsis();
     String getText();
     String getName();
+    Double getUser_ratings();
 }

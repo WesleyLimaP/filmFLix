@@ -11,28 +11,27 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query(nativeQuery = true, value = """
-            SELECT TB_MOVIE.TITLE, TB_MOVIE.SUB_TITLE, TB_MOVIE.MOVIE_YEAR , TB_MOVIE.IMG_URL, TB_MOVIE.GENRE_ID
+            SELECT TB_MOVIE.TITLE, TB_MOVIE.SUB_TITLE, TB_MOVIE.MOVIE_YEAR , TB_MOVIE.IMG_URL, TB_MOVIE.GENRE_ID, TB_MOVIE.USER_RATINGS
             FROM TB_MOVIE
             where TB_MOVIE.GENRE_ID = :idGenre"""
     )
     Page<MovieProjection> findByGenre(Long idGenre, Pageable pageable);
 
     @Query(nativeQuery = true, value = """
-            SELECT TB_MOVIE.TITLE, TB_MOVIE.SUB_TITLE, TB_MOVIE.MOVIE_YEAR , TB_MOVIE.IMG_URL
+            SELECT TB_MOVIE.TITLE, TB_MOVIE.SUB_TITLE, TB_MOVIE.MOVIE_YEAR , TB_MOVIE.IMG_URL, TB_MOVIE.USER_RATINGS
             FROM TB_MOVIE
             """
     )
     Page<MovieProjection>searchAll(Pageable pageable);
 
     @Query(nativeQuery = true, value = """
-            SELECT TB_MOVIE.TITLE, TB_MOVIE.SUB_TITLE, TB_MOVIE.MOVIE_YEAR, TB_MOVIE.IMG_URL, TB_MOVIE.SYNOPSIS, TB_REVIEW.TEXT, TB_USER.NAME, TB_GENRE.NAME\s
+            SELECT TB_MOVIE.TITLE, TB_MOVIE.SUB_TITLE, TB_MOVIE.MOVIE_YEAR, TB_MOVIE.IMG_URL, TB_MOVIE.SYNOPSIS, TB_REVIEW.TEXT, TB_USER.NAME, TB_GENRE.NAME, TB_MOVIE.USER_RATINGS\s
             FROM TB_MOVIE
             INNER JOIN TB_REVIEW ON TB_MOVIE.ID = TB_REVIEW.MOVIE_ID
             INNER JOIN TB_USER ON TB_USER.ID = TB_REVIEW.USER_ID
@@ -49,4 +48,10 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
          """
     )
     Integer removeById(Long id);
+
+    @Query(nativeQuery = true, value = """ 
+            SELECT avg(RATING )
+            from TB_REVIEW
+            where MOVIE_ID = :id""")
+    Double avg(Long id);
 }

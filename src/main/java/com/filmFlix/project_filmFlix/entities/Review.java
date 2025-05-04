@@ -16,6 +16,7 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
+    private Double rating;
 
     public Review(Long id, String text, User user, Movie movie) {
         this.id = id;
@@ -28,6 +29,13 @@ public class Review {
         this.text = text;
         this.user = user;
         this.movie = movie;
+    }
+
+    public Review(String text, User user, Movie movie, Double rating) {
+        this.text = text;
+        this.user = user;
+        this.movie = movie;
+        this.rating = rating;
     }
 
     public Review() {
@@ -65,5 +73,13 @@ public class Review {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 }

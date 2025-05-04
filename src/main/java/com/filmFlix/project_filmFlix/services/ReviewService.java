@@ -39,10 +39,17 @@ public class ReviewService {
         var userAuth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) userAuth.getPrincipal();
         Review review = new Review();
-        review.setText(dto.text());
-        review.setMovie(movieRepository.findById(dto.moivieId()).orElseThrow(() -> new ResourcesNotFoundException("filme nao encontrado")));
+
+        review.setText(dto.getText());
+        var movie = movieRepository.findById(dto.getMoivieId()).orElseThrow(() -> new ResourcesNotFoundException("filme nao encontrado"));
+        review.setMovie(movie);
         review.setUser(user);
+        review.setRating(dto.getRating());
         var entity = repository.save(review);
+
+        movie.setUserRatings( movieRepository.avg(dto.getMoivieId()));
+        movieRepository.save(movie);
+
         return new ReviewMaxDto(entity);
     }
 
@@ -69,7 +76,7 @@ public class ReviewService {
         if(!review.getUser().getId().equals(user.getId())){
             throw new UnauthorizedException("voce nao pode auterar este comentario");
         }
-        review.setText(dto.text());
+        review.setText(dto.getText());
         var entity = repository.save(review);
         return new ReviewMaxDto(entity);
     }

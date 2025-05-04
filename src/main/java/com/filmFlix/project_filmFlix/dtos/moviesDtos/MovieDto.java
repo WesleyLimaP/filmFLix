@@ -9,6 +9,7 @@ public class MovieDto {
     private Long movie_year;
     private String img_url;
     private Long genreId;
+    private Double userRating;
 
     public MovieDto(String title, String sub_title, Long movie_year, String img_url, Long genreId) {
         this.title = title;
@@ -24,6 +25,7 @@ public class MovieDto {
         this.movie_year = projection.getMovie_year();
         this.img_url = projection.getImg_url();
         this.genreId = projection.getGenre_Id();
+        this.userRating = projection.getUser_ratings();
     }
 
     public MovieDto() {
@@ -34,6 +36,7 @@ public class MovieDto {
         this.sub_title = movie.getSubTitle();
         this.movie_year = movie.getMovieYear();
         this.img_url = movie.getImgUrl();
+        this.userRating = movie.getUserRatings();
     }
 
     public String getTitle() {
@@ -74,5 +77,13 @@ public class MovieDto {
 
     public void setGenreId(Long genreId) {
         this.genreId = genreId;
+    }
+
+    public Double getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(Double userRating) {
+        this.userRating = userRating;
     }
 }

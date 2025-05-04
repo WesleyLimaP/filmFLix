@@ -24,6 +24,7 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name = "genre_id")
     private Genre genre;
+    private Double userRatings;
 
     public Movie(Long id, String title, String subTitle, Long movie_year, String imgUrl, String synopsis, Genre genre) {
         this.id = id;
@@ -34,6 +35,7 @@ public class Movie {
         this.synopsis = synopsis;
         this.genre = genre;
     }
+
     public Movie(String title, String subTitle, Long movie_year, String imgUrl, String synopsis, Genre genre) {
         this.title = title;
         this.subTitle = subTitle;
@@ -109,5 +111,13 @@ public class Movie {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public Double getUserRatings() {
+        return userRatings;
+    }
+
+    public void setUserRatings(Double userRatings) {
+        this.userRatings = userRatings;
     }
 }

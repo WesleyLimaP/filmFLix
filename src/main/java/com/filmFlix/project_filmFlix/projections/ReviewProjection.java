@@ -5,6 +5,7 @@ public interface ReviewProjection {
     String getMovie_title();
     String getText();
     String getUser_name();
+    Double getRating();
 
 
 }

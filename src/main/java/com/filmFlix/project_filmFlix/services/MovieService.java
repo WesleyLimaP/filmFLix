@@ -16,9 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
-import java.util.stream.Stream;
-
 
 @Service
 public class MovieService {
@@ -47,9 +44,6 @@ public class MovieService {
         } catch (Exception e) {
             throw new ResourcesNotFoundException("filme nao encontrado");
         }
-
-
-
 
     }
     @Transactional

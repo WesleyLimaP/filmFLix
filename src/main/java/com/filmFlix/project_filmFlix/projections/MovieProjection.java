@@ -6,4 +6,5 @@ public interface MovieProjection {
     Long getMovie_year();
     String getImg_url();
     Long getGenre_Id();
+    Double getUser_ratings();
 }

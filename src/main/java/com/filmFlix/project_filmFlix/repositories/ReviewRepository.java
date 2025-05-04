@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query(nativeQuery = true, value =
     """
-    SELECT TB_REVIEW.ID, TB_MOVIE.TITLE AS MOVIE_TITLE ,  TB_REVIEW.TEXT,TB_USER.NAME AS USER_NAME
+    SELECT TB_REVIEW.ID, TB_MOVIE.TITLE AS MOVIE_TITLE , TB_REVIEW.TEXT,TB_USER.NAME AS USER_NAME, TB_REVIEW.RATING
     FROM TB_REVIEW
     INNER JOIN TB_USER ON TB_USER.ID = TB_REVIEW.USER_ID
     INNER JOIN TB_MOVIE ON TB_MOVIE.ID = TB_REVIEW.MOVIE_ID
