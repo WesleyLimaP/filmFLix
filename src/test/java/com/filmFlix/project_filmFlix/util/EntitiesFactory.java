@@ -73,7 +73,7 @@ public class EntitiesFactory {
         return User.builder()
                 .id(1L)
                 .name("Bob")
-                .email("bob@gmail.com")
+                .email("limap16@gmail.com")
                 .password("teste")
                 .role(new Role(Authority.ROLE_ADM))
                 .build();
@@ -83,7 +83,7 @@ public class EntitiesFactory {
         var token = JWT.create()
                 .withIssuer("filmFlix")
                 .withClaim("id", 1L)
-                .withSubject("bob@gmail.com")
+                .withSubject("limap16wesley@gmail.com")
                 .withClaim("role", "ROLE_MEMBER")
                 .withExpiresAt(Instant.now().plusSeconds(1800))
                 .sign(algorithm);
@@ -120,7 +120,7 @@ public class EntitiesFactory {
         return new GenreDto("Pop");
     }
     public static LoginRequest createLoginRequest(){
-        return new LoginRequest("bob@gmail.com", "123456");
+        return new LoginRequest("limap16wesley@gmail.com", "123456");
     }
     public static LoginRequest createInvalidLoginRequest(){
         return new LoginRequest("bobb@gmail.com", "123456");
@@ -129,7 +129,7 @@ public class EntitiesFactory {
         return new SingUpRequestDto("chester", "1234567h", "chester@gmail.com");
 
     }public static SingUpRequestDto createInvalidSignUpRequest(){
-        return new SingUpRequestDto("bob", "123456", "bob@gmail.com");
+        return new SingUpRequestDto("wesley", "123456", "limap16wesley@gmail.com");
     }
 
     public static ReviewRequestDto createReviewRequestDto() {
