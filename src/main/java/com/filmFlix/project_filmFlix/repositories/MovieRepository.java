@@ -1,8 +1,7 @@
 package com.filmFlix.project_filmFlix.repositories;
 
 import com.filmFlix.project_filmFlix.entities.Movie;
-import com.filmFlix.project_filmFlix.projections.MovieDetailsProjection;
-import com.filmFlix.project_filmFlix.projections.MovieProjection;
+import com.filmFlix.project_filmFlix.projections.MovieMinProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,33 +10,34 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-
     @Query(nativeQuery = true, value = """
-            SELECT TB_MOVIE.TITLE, TB_MOVIE.SUB_TITLE, TB_MOVIE.MOVIE_YEAR , TB_MOVIE.IMG_URL, TB_MOVIE.GENRE_ID, TB_MOVIE.USER_RATINGS
-            FROM TB_MOVIE
-            where TB_MOVIE.GENRE_ID = :idGenre"""
-    )
-    Page<MovieProjection> findByGenre(Long idGenre, Pageable pageable);
+            select *\s
+            from(select distinct TB_MOVIE.ID, TB_MOVIE.TITLE
+            from TB_MOVIE\s
+            inner join TB_MOVIE_GENRE on TB_MOVIE_GENRE.MOVIE_ID = TB_MOVIE.ID\s
+            where (:genreIds is null or TB_MOVIE_GENRE.GENRE_ID in :genreIds)
+            and lower (TB_MOVIE.TITLE) like lower (concat('%',:name,'%')))\s
+            as tb_result
+           \s""",
+            countQuery = """
+                    select count(*)\s
+                    from (select distinct TB_MOVIE.ID, TB_MOVIE.TITLE
+                    from TB_MOVIE
+                    inner join TB_MOVIE_GENRE  on TB_MOVIE_GENRE.MOVIE_ID = TB_MOVIE.ID
+                    where (:genreIds is null or TB_MOVIE_GENRE.GENRE_ID in :genreIds)
+                    and lower (TB_MOVIE.TITLE) like lower (concat('%',:name,'%'))) as tb_result""")
+    Page<MovieMinProjection> searchMovies(List<Long>genreIds, String name, Pageable pageable);
 
-    @Query(nativeQuery = true, value = """
-            SELECT TB_MOVIE.TITLE, TB_MOVIE.SUB_TITLE, TB_MOVIE.MOVIE_YEAR , TB_MOVIE.IMG_URL, TB_MOVIE.USER_RATINGS
-            FROM TB_MOVIE
-            """
-    )
-    Page<MovieProjection>searchAll(Pageable pageable);
+    @Query("select obj from Movie obj join fetch obj.genres where obj.id in :movieIds ")
+    List<Movie> searchMoviesWithGenres(List<Long>movieIds);
 
-    @Query(nativeQuery = true, value = """
-            SELECT TB_MOVIE.TITLE, TB_MOVIE.SUB_TITLE, TB_MOVIE.MOVIE_YEAR, TB_MOVIE.IMG_URL, TB_MOVIE.SYNOPSIS, TB_REVIEW.TEXT, TB_USER.NAME, TB_GENRE.NAME, TB_MOVIE.USER_RATINGS\s
-            FROM TB_MOVIE
-            INNER JOIN TB_REVIEW ON TB_MOVIE.ID = TB_REVIEW.MOVIE_ID
-            INNER JOIN TB_USER ON TB_USER.ID = TB_REVIEW.USER_ID
-            INNER JOIN TB_GENRE ON TB_GENRE.ID = TB_MOVIE.GENRE_ID
-            WHERE TB_MOVIE.ID = :id""")
-    List<MovieDetailsProjection>searchById(Long id);
+    @Query("select obj from Movie obj join fetch obj.reviews join fetch obj.genres where obj.id = :id")
+    Optional<Movie> searchById(Long id);
 
     @Modifying
     @Query(

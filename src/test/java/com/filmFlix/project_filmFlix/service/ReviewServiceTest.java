@@ -1,5 +1,4 @@
 package com.filmFlix.project_filmFlix.service;
-
 import com.filmFlix.project_filmFlix.Exceptions.ResourcesNotFoundException;
 import com.filmFlix.project_filmFlix.Exceptions.UnauthorizedException;
 import com.filmFlix.project_filmFlix.dtos.reviewsDtos.ReviewMaxDto;
@@ -14,7 +13,6 @@ import com.filmFlix.project_filmFlix.services.ReviewService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -70,7 +68,7 @@ public class ReviewServiceTest {
         review.setText("Muito bom!");
         review.setMovie(movie);
         review.setUser(user);
-        requestDto = new ReviewRequestDto(validId,"Muito bom!" );
+        requestDto = new ReviewRequestDto("Muito bom!", 10.0 );
 
         reviewProjection = Mockito.mock(ReviewProjection.class);
         page = new PageImpl<>(List.of(reviewProjection));
@@ -90,6 +88,7 @@ public class ReviewServiceTest {
         Mockito.when(reviewRepository.save(review)).thenReturn(review);
     }
 
+    // Testa a funcionalidade de encontrar todos os reviews por filme
     @Test
     void findAllByMovieShouldReturnPageOfReviewMaxDto() {
         Page<ReviewMaxDto> result = reviewService.findAllByMovie(pageable, validId);
@@ -97,7 +96,7 @@ public class ReviewServiceTest {
         assertEquals(1, result.getTotalElements());
         verify(reviewRepository, times(1)).findAllByMovie(pageable, validId);
     }
-
+    // Testa a funcionalidade de encontrar um review pelo ID
     @Test
     void findByIdShouldReturnReviewMaxDtoWhenValidId() {
         ReviewMaxDto result = reviewService.findById(validId);
@@ -106,6 +105,7 @@ public class ReviewServiceTest {
         verify(reviewRepository, times(1)).findById(validId);
     }
 
+    // Testa a exceção quando o ID do review não é encontrado
     @Test
     void findByIdShouldThrowResourcesNotFoundExceptionWhenInvalidId() {
         assertThrows(ResourcesNotFoundException.class, () -> {
@@ -114,34 +114,35 @@ public class ReviewServiceTest {
         verify(reviewRepository, times(1)).findById(invalidId);
     }
 
+    // Testa a inserção de um review com credenciais válidas
     @Test
     void insertShouldReturnReviewMaxDtoWhenValidCredentials() {
         mockAuthentication();
-
-        ReviewMaxDto result = reviewService.insert(requestDto);
+        ReviewMaxDto result = reviewService.insert(validId, new ReviewRequestDto());
         assertNotNull(result);
         assertEquals(ReviewMaxDto.class, result.getClass());
         verify(reviewRepository, times(1)).save(any());
         verify(movieRepository, times(1)).findById(validId);
     }
 
+    // Testa a exceção quando o filme não é encontrado ao tentar inserir um review
     @Test
     void insertShouldThrowResourcesNotFoundExceptionWhenMovieNotFound() {
         mockAuthentication();
         Mockito.when(movieRepository.findById(invalidId)).thenReturn(Optional.empty());
-        ReviewRequestDto invalidDto = new ReviewRequestDto( invalidId,"Texto");
 
         assertThrows(ResourcesNotFoundException.class, () -> {
-            reviewService.insert(invalidDto);
+            reviewService.insert(invalidId, requestDto);
         });
 
         verify(movieRepository, times(1)).findById(invalidId);
         verify(reviewRepository, times(0)).save(any());
     }
 
+    // Testa a atualização de um review com credenciais válidas
     @Test
     void updateShouldReturnReviewMaxDtoWhenValidCredentials() {
-        mockAuthentication();
+        mockAuthentication(); // Mock da autenticação de usuário
 
         ReviewMaxDto result = reviewService.update(validId, requestDto);
         assertNotNull(result);
@@ -150,10 +151,10 @@ public class ReviewServiceTest {
         verify(reviewRepository, times(1)).save(any());
     }
 
+    // Testa a exceção quando o usuário tenta atualizar um review que não lhe pertence
     @Test
     void updateShouldThrowUnauthorizedExceptionWhenUserIsNotOwner() {
         mockAuthenticationWithDifferentUser();
-
         assertThrows(UnauthorizedException.class, () -> {
             reviewService.update(validId, requestDto);
         });
@@ -162,6 +163,7 @@ public class ReviewServiceTest {
         verify(reviewRepository, times(0)).save(any());
     }
 
+    // Testa a exclusão de um review quando o usuário é o proprietário
     @Test
     void deleteShouldDoNothingWhenUserIsOwner() {
         mockAuthentication();
@@ -172,6 +174,7 @@ public class ReviewServiceTest {
         verify(reviewRepository, times(1)).deleteById(validId);
     }
 
+    // Testa a exceção quando o usuário tenta excluir um review que não lhe pertence
     @Test
     void deleteShouldThrowUnauthorizedExceptionWhenUserIsNotOwner() {
         mockAuthenticationWithDifferentUser();
@@ -184,6 +187,7 @@ public class ReviewServiceTest {
         verify(reviewRepository, times(0)).deleteById(any());
     }
 
+    // Metodo para mockar a autenticação com o usuário correto
     private void mockAuthentication() {
         var authentication = Mockito.mock(Authentication.class);
         Mockito.when(authentication.getPrincipal()).thenReturn(user);
@@ -192,6 +196,7 @@ public class ReviewServiceTest {
         SecurityContextHolder.setContext(context);
     }
 
+    // Metodo para mockar a autenticação com um usuário diferente
     private void mockAuthenticationWithDifferentUser() {
         User otherUser = new User(99L);
         var authentication = Mockito.mock(Authentication.class);

@@ -1,5 +1,4 @@
 package com.filmFlix.project_filmFlix.controller;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.filmFlix.project_filmFlix.dtos.genreDtos.GenreDto;
 import com.filmFlix.project_filmFlix.services.GenreService;
@@ -49,11 +48,11 @@ public class GenreControllerIT {
         result.andExpect(status().isOk());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.content").exists());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.content").isNotEmpty());
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.totalElements").value("4"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.content[0].name").value("Anime"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.content[1].name").value("Comédia"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.content[2].name").value("Drama"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.content[3].name").value("Terror"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.content[0].name").value("Animação"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.content[1].name").value("Aventura"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.content[2].name").value("Ação"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.content[3].name").value("Comédia"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.content[4].name").value("Crime"));
     }
     //find by id(sucesso)
     @Test
@@ -104,7 +103,7 @@ public class GenreControllerIT {
         result.andExpect(status().isConflict());
 
     }
-    //insert(falha de perfil sem autoridade)
+   // insert(falha de perfil sem autoridade)
 
     @Test
     public void insertShouldReturn403WhenInvalidRole() throws Exception {
@@ -157,7 +156,7 @@ public class GenreControllerIT {
     public void updateShouldReturn404WhenInvalidId() throws Exception {
         var genre = EntitiesFactory.createGenreDto();
         var json = objectMapper.writeValueAsString(genre);
-        var result = mockMvc.perform(put("/genre/6")
+        var result = mockMvc.perform(put("/genre/66")
                         .header("Authorization", "Bearer " + admToken)
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON)

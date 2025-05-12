@@ -2,6 +2,7 @@ package com.filmFlix.project_filmFlix.entities;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -13,8 +14,8 @@ public class Genre {
     private Long id;
     @Column(unique = true)
     private String name;
-    @OneToMany(mappedBy = "genre")
-    private Set<Movie> movies;
+    @ManyToMany(mappedBy = "genres")
+    private Set<Movie> movies = new HashSet<>();
 
     public Genre(Long id, String name) {
         this.id = id;

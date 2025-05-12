@@ -3,8 +3,7 @@ package com.filmFlix.project_filmFlix.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
@@ -21,30 +20,39 @@ public class Movie {
     private String synopsis;
     @OneToMany(mappedBy = "movie")
     private Set<Review> reviews = new HashSet<>();
-    @ManyToOne
-    @JoinColumn(name = "genre_id")
-    private Genre genre;
+    @ManyToMany
+    @JoinTable(name = "tb_movie_genre",
+    joinColumns = @JoinColumn(name = "movie_id"),
+    inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private Set<Genre> genres = new HashSet<>();
     private Double userRatings;
+    private String trailer;
 
-    public Movie(Long id, String title, String subTitle, Long movie_year, String imgUrl, String synopsis, Genre genre) {
+    public Movie(Long id, String title, String subTitle, Long movie_year, String imgUrl, String synopsis) {
         this.id = id;
         this.title = title;
         this.subTitle = subTitle;
         this.movieYear = movie_year;
         this.imgUrl = imgUrl;
         this.synopsis = synopsis;
-        this.genre = genre;
     }
 
-    public Movie(String title, String subTitle, Long movie_year, String imgUrl, String synopsis, Genre genre) {
+    public Movie(String title, String subTitle, Long movie_year, String imgUrl, String synopsis) {
         this.title = title;
         this.subTitle = subTitle;
         this.movieYear = movie_year;
         this.imgUrl = imgUrl;
         this.synopsis = synopsis;
-        this.genre = genre;
     }
 
+    public Movie(String title, String subTitle, Long movieYear, String imgUrl, String synopsis, String trailer) {
+        this.title = title;
+        this.subTitle = subTitle;
+        this.movieYear = movieYear;
+        this.imgUrl = imgUrl;
+        this.synopsis = synopsis;
+        this.trailer = trailer;
+    }
 
     public Movie() {
     }
@@ -105,19 +113,35 @@ public class Movie {
         return reviews;
     }
 
-    public Genre getGenre() {
-        return genre;
-    }
-
-    public void setGenre(Genre genre) {
-        this.genre = genre;
-    }
-
     public Double getUserRatings() {
         return userRatings;
     }
 
     public void setUserRatings(Double userRatings) {
         this.userRatings = userRatings;
+    }
+
+    public String getTrailer() {
+        return trailer;
+    }
+
+    public void setTrailer(String trailer) {
+        this.trailer = trailer;
+    }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return Objects.equals(id, movie.id) && Objects.equals(title, movie.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title);
     }
 }

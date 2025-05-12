@@ -5,68 +5,52 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.filmFlix.project_filmFlix.dtos.authDtos.SingUpRequestDto;
 import com.filmFlix.project_filmFlix.dtos.authDtos.LoginRequest;
-import com.filmFlix.project_filmFlix.dtos.authDtos.SingUpRequestDto;
 import com.filmFlix.project_filmFlix.dtos.authDtos.TokenDto;
 import com.filmFlix.project_filmFlix.dtos.genreDtos.GenreDto;
 import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieDetailsDto;
-import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieInsertDto;
+import com.filmFlix.project_filmFlix.dtos.moviesDtos.MovieInsertRequestDto;
 import com.filmFlix.project_filmFlix.dtos.reviewsDtos.ReviewRequestDto;
 import com.filmFlix.project_filmFlix.entities.*;
 import com.filmFlix.project_filmFlix.enums.Authority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
+import java.util.List;
 
 public class EntitiesFactory {
     public static SingUpRequestDto createSingUpRequest(){
         return new SingUpRequestDto("wesley", "teste", "wesleylima029@gmail.com");
     }
-    public static MovieInsertDto createMovieInsertDto(){
-        return new MovieInsertDto(
-
-                "O Senhor dos Anéis",
-                "A Sociedade do Anel",
-                2001L,
-                "https://imagem.com/poster.jpg",
-                "Um grupo parte em uma jornada para destruir o Um Anel.",
-                1L
-        );
+    public static MovieInsertRequestDto createMovieInsertDto(){
+        return new MovieInsertRequestDto("O Senhor dos Anéis","A Sociedade do Anel", List.of(1L, 2L));
     }
-    public static MovieInsertDto createMovieInsertDtoWitchInvalidGenre(){
-        return new MovieInsertDto(
-
-                "O Senhor dos Anéis",
-                "A Sociedade do Anel",
-                2001L,
-                "https://imagem.com/poster.jpg",
-                "Um grupo parte em uma jornada para destruir o Um Anel.",
-                5L
-        );
+    public static MovieInsertRequestDto createMovieInsertDtoWitchInvalidGenre(){
+        return new MovieInsertRequestDto("O Senhor dos Anéis", "A Sociedade do Anel", List.of(555L));
     }
     public static Movie createMovie(){
-       var movie=  new Movie(
-
-                "O Senhor dos Anéis",
-                "A Sociedade do Anel",
-                2001L,
-                "https://imagem.com/poster.jpg",
-                "Um grupo parte em uma jornada para destruir o Um Anel.",
-                new Genre(1L)
+        Movie movie = new Movie(
+                "O Labirinto do Fauno",
+                null, // subTitle
+                2006L,
+                "https://image.tmdb.org/t/p/w500_and_h282_face/oXMfT5OM6HAgQ9sGANB8cs1ifCG.jpg",
+                "Em 1944, na Espanha, a jovem Ofélia e sua mãe doente chegam ao posto do novo marido de sua mãe, um sádico oficial do exército. Enquanto explora um labirinto antigo, ela encontra um fauno que diz que ela é uma princesa perdida e precisa cumprir três tarefas para retornar ao seu reino.",
+                "https://www.youtube.com/watch?v=EqYiSlkvRuw"
         );
         movie.getReviews().add(new Review("demais!", new User(1L), new Movie(1L)));
+        movie.getGenres().addAll(List.of(new Genre(1L), new Genre(2L)));
         return movie;
     }
     public static MovieDetailsDto createMovieDetails(){
-        var dto = new MovieDetailsDto(
-
-                "O Senhor dos Anéis",
-                "A Sociedade do Anel",
-                2001L,
-                "https://imagem.com/poster.jpg",
-                "Um grupo parte em uma jornada para destruir o Um Anel.",
-                "Comédia"
+        MovieDetailsDto movieDetailsDto = new MovieDetailsDto(
+                "O Labirinto do Fauno",
+                null, // subTitle
+                2006L,
+                "https://image.tmdb.org/t/p/w500_and_h282_face/oXMfT5OM6HAgQ9sGANB8cs1ifCG.jpg",
+                "Em 1944, na Espanha, a jovem Ofélia e sua mãe doente chegam ao posto do novo marido de sua mãe, um sádico oficial do exército. Enquanto explora um labirinto antigo, ela encontra um fauno que diz que ela é uma princesa perdida e precisa cumprir três tarefas para retornar ao seu reino.",
+                8.7 // userRating
         );
-        return dto;
+
+        return movieDetailsDto;
     }
 
     public static UserDetails createUser(){
@@ -133,6 +117,6 @@ public class EntitiesFactory {
     }
 
     public static ReviewRequestDto createReviewRequestDto() {
-        return new ReviewRequestDto(1L, "teste");
+        return new ReviewRequestDto("teste", 7.0);
     }
 }

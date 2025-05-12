@@ -17,7 +17,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Transactional
 @AutoConfigureMockMvc
-public class ReviewControllerIT {
+public class
+ReviewControllerIT {
 
 
         @Autowired
@@ -75,8 +76,8 @@ public class ReviewControllerIT {
             var review = EntitiesFactory.createReviewRequestDto();
             var json = objectMapper.writeValueAsString(review);
 
-            var result = mockMvc.perform(post("/review")
-                    .header("Authorization", "Bearer " + token)
+            var result = mockMvc.perform(post("/review/1")
+                    .header("Authorization", "Bearer " + admToken)
                     .content(json)
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON));
@@ -117,7 +118,7 @@ public class ReviewControllerIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON));
 
-                result.andExpect(status().isUnauthorized()); // caso esteja tratando como token inválido
+                result.andExpect(status().isUnauthorized());
 
             } catch (Exception e) {
                 return;

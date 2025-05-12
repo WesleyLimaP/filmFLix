@@ -1,12 +1,16 @@
 package com.filmFlix.project_filmFlix.dtos.moviesDtos;
 
+import com.filmFlix.project_filmFlix.dtos.genreDtos.GenreDto;
 import com.filmFlix.project_filmFlix.dtos.reviewsDtos.ReviewDto;
+import com.filmFlix.project_filmFlix.entities.Genre;
 import com.filmFlix.project_filmFlix.entities.Movie;
 import com.filmFlix.project_filmFlix.entities.Review;
 import com.filmFlix.project_filmFlix.projections.MovieDetailsProjection;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MovieDetailsDto {
     private String title;
@@ -14,28 +18,18 @@ public class MovieDetailsDto {
     private Long year;
     private String imgUrl;
     private String synopsis;
-    private String genre;
+    private Set<GenreDto> genre = new HashSet<>();
     private Double userRating;
     private Set<ReviewDto> reviews = new HashSet<>();
 
-    public MovieDetailsDto(MovieDetailsProjection projection) {
-        this.title = projection.getTitle();
-        this.subTitle = projection.getSub_title();
-        this.year = projection.getMovie_year();
-        this.imgUrl = projection.getImg_url();
-        this.synopsis = projection.getSynopsis();
-        this.genre = projection.getName();
-        this.userRating = projection.getUser_ratings();
 
-    }
-
-    public MovieDetailsDto(String title, String subTitle, Long year, String imgUrl, String synopsis, String genre) {
+    public MovieDetailsDto(String title, String subTitle, Long year, String imgUrl, String synopsis, Double userRating) {
         this.title = title;
         this.subTitle = subTitle;
         this.year = year;
         this.imgUrl = imgUrl;
         this.synopsis = synopsis;
-        this.genre = genre;
+        this.userRating = userRating;
     }
 
     public MovieDetailsDto(Movie movie) {
@@ -44,24 +38,19 @@ public class MovieDetailsDto {
         this.year = movie.getMovieYear();
         this.imgUrl = movie.getImgUrl();
         this.synopsis = movie.getSynopsis();
-        this.genre = String.valueOf(movie.getGenre().getId());
         this.userRating = movie.getUserRatings();
 
-        for(Review review: movie.getReviews()){
-            this.getReviews().add(new ReviewDto(review));
-        }
+        reviews.addAll(movie.getReviews().stream().map(ReviewDto::new).toList());
+        genre.addAll(movie.getGenres().stream().map(GenreDto::new).toList());
+
 
     }
 
     public MovieDetailsDto() {
     }
 
-    public String getGenre() {
+    public Set<GenreDto> getGenre() {
         return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 
     public String getTitle() {

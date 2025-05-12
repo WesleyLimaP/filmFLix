@@ -18,9 +18,15 @@ public class GenreDto{
         this.id = id;
         this.name = name;
     }
+
     public GenreDto(String name) {
         this.name = name;
     }
+
+    public GenreDto(Long id) {
+        this.id = id;
+    }
+
 
     public String getName() {
         return name;

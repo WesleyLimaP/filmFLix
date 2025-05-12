@@ -35,19 +35,19 @@ public class ReviewService {
     }
 
     @Transactional
-    public ReviewMaxDto insert(ReviewRequestDto dto)  {
+    public ReviewMaxDto insert(Long id, ReviewRequestDto dto)  {
         var userAuth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) userAuth.getPrincipal();
         Review review = new Review();
 
         review.setText(dto.getText());
-        var movie = movieRepository.findById(dto.getMoivieId()).orElseThrow(() -> new ResourcesNotFoundException("filme nao encontrado"));
+        var movie = movieRepository.findById(id).orElseThrow(() -> new ResourcesNotFoundException("filme nao encontrado"));
         review.setMovie(movie);
         review.setUser(user);
         review.setRating(dto.getRating());
         var entity = repository.save(review);
 
-        movie.setUserRatings( movieRepository.avg(dto.getMoivieId()));
+        movie.setUserRatings( movieRepository.avg(id));
         movieRepository.save(movie);
 
         return new ReviewMaxDto(entity);
@@ -62,7 +62,7 @@ public class ReviewService {
     public void delete(Long id){
         var userAuth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) userAuth.getPrincipal();
-        Review review = repository.findById(id).orElseThrow(()-> new ResourcesNotFoundException("filme nao encontrado"));
+        Review review = repository.findById(id).orElseThrow(()-> new ResourcesNotFoundException("review nao encontrado"));
         if(!review.getUser().getId().equals(user.getId())){
             throw new UnauthorizedException("voce nao pode apagar este comentario");
         }

@@ -9,4 +9,5 @@ public interface MovieDetailsProjection {
     String getText();
     String getName();
     Double getUser_ratings();
+    Long getGenre_id();
 }

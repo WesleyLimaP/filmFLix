@@ -3,6 +3,8 @@ package com.filmFlix.project_filmFlix.dtos.reviewsDtos;
 import com.filmFlix.project_filmFlix.entities.Review;
 import com.filmFlix.project_filmFlix.projections.MovieDetailsProjection;
 
+import java.util.Objects;
+
 public class ReviewDto {
 
     private String text;

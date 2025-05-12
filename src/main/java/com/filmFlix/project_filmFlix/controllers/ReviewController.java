@@ -37,11 +37,11 @@ public class ReviewController {
     {
         return ResponseEntity.ok().body(service.findById(id));
     }
-    @PostMapping()
+    @PostMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_MEMBER') or hasAuthority('ROLE_ADM')")
-    public ResponseEntity<ReviewMaxDto> insert(@Valid @RequestBody ReviewRequestDto dto)
+    public ResponseEntity<ReviewMaxDto> insert(@PathVariable Long id, @Valid @RequestBody ReviewRequestDto dto)
     {
-        var review = service.insert(dto);
+        var review = service.insert(id, dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(review.getId()).toUri();
         return ResponseEntity.created(uri).body(review);

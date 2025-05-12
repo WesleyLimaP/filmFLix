@@ -50,7 +50,7 @@ class UserServiceTest {
     void SetUp(){
         role = new Role(Authority.ROLE_MEMBER);
         user = (User) EntitiesFactory.createUser();
-        validEmail = "bob@gmail.com";
+        validEmail = "limap16@gmail.com";
         invalidEmail = "invalidEmail@gmail.com";
         requestDto = EntitiesFactory.createSingUpRequest();
         validId = 1L;
@@ -74,6 +74,7 @@ class UserServiceTest {
 
 
     }
+    // Teste para carregar o usuário com email válido
     @Test
     void loadByUserNameShouldAnUserDetailsWhenValidEmail(){
         when(repository.getByEmail(validEmail)).thenReturn(user);
@@ -82,6 +83,8 @@ class UserServiceTest {
         Assertions.assertEquals(User.class, result.getClass());
         Mockito.verify(repository, Mockito.times(1)).getByEmail(validEmail);
     }
+
+    // Teste para lançar exceção quando o email for inválido
     @Test
     void loadByUserNameShouldThrowUsernameNotFoundExceptionWhenInvalidEmail(){
         Assertions.assertThrows( UsernameNotFoundException.class, () ->{
@@ -89,31 +92,37 @@ class UserServiceTest {
         });
         Mockito.verify(repository, Mockito.times(1)).getByEmail(invalidEmail);
     }
+
+    // Teste para cadastrar o usuário com credenciais válidas
     @Test
     void singUpShouldReturnAnUserWhenValidCredentials(){
         var result =  service.singUp(requestDto);
-        Assertions.assertEquals("bob@gmail.com", result.getUsername());
+        Assertions.assertEquals(validEmail, result.getUsername());
         Assertions.assertEquals(User.class, result.getClass());
         Mockito.verify(repository, Mockito.times(1)).save(ArgumentMatchers.any());
         Mockito.verify(passwordEncoder, Mockito.times(1)).encode(ArgumentMatchers.any());
         Assertions.assertEquals("senhaCodificada", passwordEncoder.encode("senha"));
     }
+
+    // Teste para lançar exceção de duplicação quando as credenciais são inválidas
     @Test
     void singUpShouldThrowDuplicationExceptionWhenInvalidCredentials(){
         Mockito.doThrow(DuplacationEntityException.class).when(repository).save(any());
         Assertions.assertThrows( DuplacationEntityException.class, () ->{
             service.singUp(requestDto);
         });
-
     }
+
+    // Teste para lançar exceção quando o papel (role) não for encontrado
     @Test
     void singUpShouldThrowResourceNotFoundExceptionWhenInvalidId(){
         Mockito.doThrow(ResourcesNotFoundException.class).when(roleRepository).findById(any());
         Assertions.assertThrows( ResourcesNotFoundException.class, () ->{
             service.singUp(requestDto);
         });
-
     }
+
+    // Teste para retornar o usuário com um ID válido
     @Test
     void finByIdShouldReturnAnUserWhenValidId(){
         var result =  service.findById(validId);
@@ -121,6 +130,8 @@ class UserServiceTest {
         Assertions.assertEquals(User.class, result.getClass());
         Mockito.verify(repository, Mockito.times(1)).findById(ArgumentMatchers.any());
     }
+
+    // Teste para lançar exceção quando o ID for inválido
     @Test
     void finbByidShouldThrowResourceNotFoundExceptionWhenInvalidId() {
         Assertions.assertThrows(ResourcesNotFoundException.class, () -> {
