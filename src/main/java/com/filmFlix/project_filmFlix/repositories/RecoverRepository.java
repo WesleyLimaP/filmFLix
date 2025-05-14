@@ -1,6 +1,5 @@
 package com.filmFlix.project_filmFlix.repositories;
 
-import com.filmFlix.project_filmFlix.dtos.authDtos.PasswordRecoverDtos.PasswordRecoverDto;
 import com.filmFlix.project_filmFlix.entities.PasswordRecover;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

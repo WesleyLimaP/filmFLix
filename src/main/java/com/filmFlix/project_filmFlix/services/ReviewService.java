@@ -55,7 +55,7 @@ public class ReviewService {
 
     @Transactional
     public ReviewMaxDto findById(Long id){
-        return repository.findById(id).map(ReviewMaxDto::new).orElseThrow(()-> new ResourcesNotFoundException("filme nao encontrado"));
+        return repository.findById(id).map(ReviewMaxDto::new).orElseThrow(()-> new ResourcesNotFoundException("comentario nao encontrado"));
     }
 
     @Transactional

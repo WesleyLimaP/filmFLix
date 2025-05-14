@@ -2,7 +2,7 @@ package com.filmFlix.project_filmFlix.controllers;
 import com.filmFlix.project_filmFlix.dtos.authDtos.LoginRequest;
 import com.filmFlix.project_filmFlix.dtos.authDtos.SingUpRequestDto;
 import com.filmFlix.project_filmFlix.dtos.authDtos.TokenDto;
-import com.filmFlix.project_filmFlix.dtos.authDtos.emailDtos.EmailMinDto;
+import com.filmFlix.project_filmFlix.dtos.authDtos.PasswordRecoverDtos.EmailMinDto;
 import com.filmFlix.project_filmFlix.dtos.authDtos.PasswordRecoverDtos.newPasswordDto;
 import com.filmFlix.project_filmFlix.entities.User;
 import com.filmFlix.project_filmFlix.services.JwtService;
