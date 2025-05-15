@@ -1,12 +1,11 @@
 🎬 filmFLix
-filmFLix é uma API RESTful desenvolvida com Java + Spring Boot para gerenciamento de um catálogo de filmes. Ela suporta autenticação com JWT, 
-controle de acesso baseado em papéis (admin/membro), CRUD de filmes, gêneros e avaliações, além de recuperação de senha por e-mail.
+filmFLix é uma API RESTful desenvolvida com Java + Spring Boot para avaliações de filmes. Ela suporta autenticação com JWT, 
+controle de acesso baseado em papéis (admin/membro), CRUD de filmes com integração com a api do tmdb, além de recuperação de senha por e-mail.
 
 simulação de como seria o front end: https://www.figma.com/file/6JQVnxKgKtVHLleSBBgRin/MovieFlix-front-listagem
 
 
-![Desktop Screenshot 2025 05 01 - 18 09 44 79](https://github.com/user-attachments/assets/94a1942f-d1bb-4808-bc71-9300b451c166)
-
+![Desktop Screenshot 2025 05 13 - 20 24 31 45](https://github.com/user-attachments/assets/07d0725b-5cf8-4cc8-a80e-fec9d8583e2c)
 
 
 
@@ -25,6 +24,8 @@ Paginação nos endpoints de listagem.
 
 Controle de acesso via roles (ROLE_ADM, ROLE_MEMBER).
 
+consultas personalizadas para evitar o problema de N+1 consultas causadas por relações @OneToMany ou @ManyToMany.
+
 🛠 Tecnologias
 Java 
 
@@ -39,6 +40,8 @@ JPA/Hibernate
 Bean Validation
 
 Spring Mail
+
+TMDB API
 
 🔗 Endpoints
 🔐 Autenticação
@@ -95,5 +98,19 @@ ROLE_ADM: Acesso total (filmes, gêneros)
 
 ROLE_MEMBER: Pode criar e gerenciar suas reviews
 
+ROLE_VISITOR: Pode ver o catalogo de filme e suas reviews mas nao pode adcionar reviews
+
 Token é gerado e validado com o JwtService.
+
+🛠️ Execução Local
+
+criar e rodar um conteiner a partir da imagem wesleylima029/filmflix:v1
+
+acessar a collection no postman: https://www.postman.com/navigation-architect-16262154/filmflix-api/collection/5lg6mpd/filmflix?action=share&creator=40316259&active-environment=40316259-70cc0d42-6666-4c34-83e9-01c4aa4d23db
+
+executar os endpoints 
+
+a partir do conteiner, é permitido executar o banco de dados h2 localmente atraves da rota localhost:8080/h2-console para conferir os dados
+
+
 
