@@ -1,24 +1,4 @@
 services:
-
-  back-end:
-    container_name: filmflix-conteiner
-    build: .
-    depends_on:
-      - postgres
-    networks:
-      - app-network
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/filmflix
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 8011
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-      SPRING_JPA_HIBERNATE_DDL_AUTO: none
-      SPRING_JPA_SHOW_SQL: true
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
-    ports:
-      - "8080:8080"
-
   postgres:
     image: postgres
     container_name: postgres-conteiner
